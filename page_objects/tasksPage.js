@@ -3,16 +3,15 @@
  */
 function TasksPage() {
   // Web elements for Tasks Page
-  this.todayLabel = element(by.xpath('//*[@id="agenda_view"]/div/div/h2/a'));
-  this.addTaskLink = element(by.xpath('//*[@id="agenda_view"]/div/ul/li[2]/a/span'));
-  this.taskInput = element(by.xpath('//*[@id="agenda_view"]/div/ul/li[2]/form/table[1]/tbody/tr/td/table/tbody/tr/td[1]/div'));
-  this.addTaskButton = element(by.xpath('//*[@id="agenda_view"]/div/ul/li[2]/form/table[2]/tbody/tr/td[1]/a[1]/span'));
+  this.todayLabel = element(by.css('.section_header a'));
+  this.addTaskLink = element(by.linkText('Add Task'));
+  this.taskInput = element(by.css('.sel_richtext_editor'));
+  this.addTaskButton = element(by.css('.ist_button_red span'));
   this.firstTaskContent = element(by.css('.text.sel_item_content'));
-  this.firstTaskInput = element(by.xpath('//*[@id="agenda_view"]/div/ul/li[3]/form/table[1]/tbody/tr/td/table/tbody/tr/td[1]/div'));
-  this.saveButton = element(by.xpath('//*[@id="agenda_view"]/div/ul/li[3]/form/table[2]/tbody/tr/td[1]/a[1]/span'));
-  this.firstTaskMenu = element(by.xpath('//li[contains(@class, "task_item")]/table/tbody/tr/td[4]/div'));
-  this.deleteTaskOption = element(by.xpath('/html/body/div[12]/table/tbody/tr[13]/td/div/div'));
-  this.deleteButton = element(by.xpath('//*[@id="GB_window"]/div/div[2]/div/div/div/div[3]/a[1]/span'));
+  this.saveButton = element(by.linkText('Save'));
+  this.firstTaskMenu = element(by.css('.task_item td.menu'));
+  this.deleteTaskOption = element(by.xpath('//div[contains(@class, "ist_menu") and not(contains(@style,"display: none;"))]//div[contains(text(),"Delete task")]'));
+  this.deleteButton = element(by.linkText('Delete'));
 
   /**
    * @description Function used to create a Task
@@ -32,8 +31,8 @@ function TasksPage() {
    */
   this.updateTask = (task) => {
     this.firstTaskContent.click();
-    this.firstTaskInput.clear();
-    this.firstTaskInput.sendKeys(task);
+    this.taskInput.clear();
+    this.taskInput.sendKeys(task);
     this.saveButton.click();
   };
 

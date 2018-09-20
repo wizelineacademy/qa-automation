@@ -3,9 +3,9 @@
  */
 function LoginPage() {
   // Web elements for Login
-  this.emailTextField = element(by.xpath('//*[@id="email"]'));
-  this.passwordTextField = element(by.xpath('//*[@id="password"]'));
-  this.loginButton = element(by.xpath('//*[@id="login_form"]/a'));
+  this.emailTextField = element(by.id('email'));
+  this.passwordTextField = element(by.id('password'));
+  this.loginButton = element(by.css('.sel_login'));
 
   /**
    * @description Function used to enter credentials for Login then click on Login Button
