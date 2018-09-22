@@ -5,7 +5,7 @@ const actions = require('../base/actions');
  */
 function TasksPage() {
   // Web elements for Tasks Page
-  this.todayLabel = element(by.id('agenda_view'));
+  this.agendaView = element(by.id('agenda_view'));
   this.addTaskLink = element(by.css('.agenda_add_task a'));
   this.taskInput = element(by.css('.sel_richtext_editor'));
   this.submitButton = element(by.css('.submit_btn'));
@@ -56,11 +56,11 @@ function TasksPage() {
   };
 
   /**
-   * @description Function used to know if the Today label is displayed
-   * @method isTodayLabelDisplayed
+   * @description Function used to know if the Agenda View is displayed
+   * @method isAgendaViewDisplayed
    */
-  this.isTodayLabelDisplayed = () => {
-    return actions.isElementDisplayed(this.todayLabel);
+  this.isAgendaViewDisplayed = () => {
+    return actions.isElementDisplayed(this.agendaView);
   };
 
   /**
