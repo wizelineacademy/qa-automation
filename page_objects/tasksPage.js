@@ -4,14 +4,13 @@
 function TasksPage() {
   // Web elements for Tasks Page
   this.todayLabel = element(by.css('.section_header a'));
-  this.addTaskLink = element(by.linkText('Add Task'));
+  this.addTaskLink = element(by.css('.agenda_add_task a'));
   this.taskInput = element(by.css('.sel_richtext_editor'));
-  this.addTaskButton = element(by.css('.ist_button_red span'));
-  this.firstTaskContent = element(by.css('.text.sel_item_content'));
-  this.saveButton = element(by.linkText('Save'));
-  this.firstTaskMenu = element(by.css('.task_item td.menu'));
-  this.deleteTaskOption = element(by.xpath('//div[contains(@class, "ist_menu") and not(contains(@style,"display: none;"))]//div[contains(text(),"Delete task")]'));
-  this.deleteButton = element(by.linkText('Delete'));
+  this.submitButton = element(by.css('.submit_btn'));
+  this.tasksList = element.all(by.css('.text.sel_item_content'));
+  this.taskMenuList = element.all(by.css('.task_item td.menu'));
+  this.deleteTaskOption = element(by.xpath('//div[contains(@class, "ist_menu") and not(contains(@style,"display: none;"))]//td[contains(@data-track,"task|more_delete")]'));
+  this.deleteButton = element(by.css('.ist_button_red'));
 
   /**
    * @description Function used to create a Task
@@ -21,7 +20,7 @@ function TasksPage() {
   this.createTask = (task) => {
     this.addTaskLink.click();
     this.taskInput.sendKeys(task);
-    this.addTaskButton.click();
+    this.submitButton.click();
   };
 
   /**
@@ -30,10 +29,10 @@ function TasksPage() {
    * @param {String} task
    */
   this.updateTask = (task) => {
-    this.firstTaskContent.click();
+    this.tasksList.last().click();
     this.taskInput.clear();
     this.taskInput.sendKeys(task);
-    this.saveButton.click();
+    this.submitButton.click();
   };
 
   /**
@@ -42,9 +41,7 @@ function TasksPage() {
    * @param {String} task
    */
   this.deleteTask = () => {
-    browser.actions().mouseMove(this.firstTaskContent).perform();
-    browser.sleep(1000);
-    this.firstTaskMenu.click();
+    this.taskMenuList.last().click();
     browser.sleep(1000);
     this.deleteTaskOption.click();
     this.deleteButton.click();

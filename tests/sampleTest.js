@@ -15,18 +15,19 @@ describe("SignIn into the Site", function() {
     it("Create a task", function() {
         tasksPage.createTask('Some task');
         browser.sleep(6000);
-        expect(tasksPage.firstTaskContent.getText()).toEqual('Some task');
+        expect(tasksPage.tasksList.last().getText()).toEqual('Some task');
     });
 
     it("Update a task", function() {
         tasksPage.updateTask('Updated task');
         browser.sleep(6000);
-        expect(tasksPage.firstTaskContent.getText()).toEqual('Updated task');
+        expect(tasksPage.tasksList.last().getText()).toEqual('Updated task');
     });
 
     it("Delete a task", function() {
+        const initialListLength = tasksPage.tasksList.count();
         tasksPage.deleteTask();
         browser.sleep(6000);
-        expect(tasksPage.firstTaskContent.isPresent()).toBe(false);
+        expect(tasksPage.tasksList.count()).not.toEqual(initialListLength);
     });
 });
