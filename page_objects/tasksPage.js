@@ -1,3 +1,5 @@
+const actions = require('../base/actions');
+
 /**
  * @description Page Object for Tasks Page.
  */
@@ -18,9 +20,9 @@ function TasksPage() {
    * @param {String} task
    */
   this.createTask = (task) => {
-    this.addTaskLink.click();
-    this.taskInput.sendKeys(task);
-    this.submitButton.click();
+    actions.clickToElement(this.addTaskLink);
+    actions.enterText(this.taskInput, task);
+    actions.clickToElement(this.submitButton);
   };
 
   /**
@@ -29,22 +31,44 @@ function TasksPage() {
    * @param {String} task
    */
   this.updateTask = (task) => {
-    this.tasksList.last().click();
-    this.taskInput.clear();
-    this.taskInput.sendKeys(task);
-    this.submitButton.click();
+    actions.clickToElement(this.tasksList.last());
+    actions.clearElementText(this.taskInput);
+    actions.enterText(this.taskInput, task);
+    actions.clickToElement(this.submitButton);
   };
 
   /**
    * @description Function used to delete a Task
    * @method deleteTask
-   * @param {String} task
    */
   this.deleteTask = () => {
-    this.taskMenuList.last().click();
-    browser.sleep(1000);
-    this.deleteTaskOption.click();
-    this.deleteButton.click();
+    actions.clickToElement(this.taskMenuList.last());
+    actions.clickToElement(this.deleteTaskOption);
+    actions.clickToElement(this.deleteButton);
+  };
+
+  /**
+   * @description Function used to get the text from the last text
+   * @method getLastTaskText
+   */
+  this.getLastTaskText = () => {
+    return actions.getElementText(this.tasksList.last());
+  };
+
+  /**
+   * @description Function used to know if the Today label is displayed
+   * @method isTodayLabelDisplayed
+   */
+  this.isTodayLabelDisplayed = () => {
+    return actions.isElementDisplayed(this.todayLabel);
+  };
+
+  /**
+   * @description Function used to get the number of tasks in the task list
+   * @method getTasksCount
+   */
+  this.getTasksCount = () => {
+    return this.tasksList.count();
   };
 }
 module.exports = new TasksPage();

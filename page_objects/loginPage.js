@@ -1,3 +1,5 @@
+const actions = require('../base/actions');
+
 /**
  * @description Page Object for Login Page.
  */
@@ -14,9 +16,9 @@ function LoginPage() {
    * @param {String} pass
    */
   this.enterUserCredentials = (email, pass) => {
-    this.emailTextField.sendKeys(email);
-    this.passwordTextField.sendKeys(pass);
-    this.loginButton.click();
+    actions.enterText(this.emailTextField, email);
+    actions.enterText(this.passwordTextField, pass);
+    actions.clickToElement(this.loginButton);
   };
 }
 module.exports = new LoginPage();

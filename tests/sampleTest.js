@@ -1,33 +1,31 @@
-var email = 'YOUR_MAIL';
-var pass = 'YOUR_PASSWORD';
+const data = require('../test_data/data');
+const page = require('../page_objects/page')
 const loginPage = require('../page_objects/loginPage');
 const tasksPage = require('../page_objects/tasksPage');
 
+beforeAll(function () {
+  page.openUrl()
+})
+
 describe("SignIn into the Site", function() {
     it("Enter application", function() {
-        browser.get('https://todoist.com/Users/showLogin#start');
-        browser.sleep(6000);
-        loginPage.enterUserCredentials(email, pass);
-        browser.sleep(6000);
-        expect(tasksPage.todayLabel.isPresent()).toBe(true);
+        loginPage.enterUserCredentials(data.email, data.password);
+        expect(tasksPage.isTodayLabelDisplayed()).toBe(true);
     });
 
     it("Create a task", function() {
-        tasksPage.createTask('Some task');
-        browser.sleep(6000);
-        expect(tasksPage.tasksList.last().getText()).toEqual('Some task');
+        tasksPage.createTask(data.taskName);
+        expect(tasksPage.getLastTaskText()).toEqual(data.taskName);
     });
 
     it("Update a task", function() {
-        tasksPage.updateTask('Updated task');
-        browser.sleep(6000);
-        expect(tasksPage.tasksList.last().getText()).toEqual('Updated task');
+        tasksPage.updateTask(data.taskUpdate);
+        expect(tasksPage.getLastTaskText()).toEqual(data.taskUpdate);
     });
 
     it("Delete a task", function() {
-        const initialListLength = tasksPage.tasksList.count();
+        const initialListLength = tasksPage.getTasksCount();
         tasksPage.deleteTask();
-        browser.sleep(6000);
-        expect(tasksPage.tasksList.count()).not.toEqual(initialListLength);
+        expect(tasksPage.getTasksCount()).not.toEqual(initialListLength);
     });
 });
