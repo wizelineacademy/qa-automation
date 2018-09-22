@@ -56,7 +56,7 @@ function TasksPage() {
   };
 
   /**
-   * @description Function used to know if the Today label is displayed
+   * @description Function used to know if the Agenda View is displayed
    * @method isAgendaViewDisplayed
    */
   this.isAgendaViewDisplayed = () => {
