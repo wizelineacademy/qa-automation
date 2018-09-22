@@ -13,6 +13,7 @@ function TasksPage() {
   this.taskMenuList = element.all(by.css('.task_item td.menu'));
   this.deleteTaskOption = element(by.xpath('//div[contains(@class, "ist_menu") and not(contains(@style,"display: none;"))]//td[contains(@data-track,"task|more_delete")]'));
   this.deleteButton = element(by.css('.ist_button_red'));
+  this.loading = element(by.id('loading'));
 
   /**
    * @description Function used to create a Task
@@ -20,6 +21,7 @@ function TasksPage() {
    * @param {String} task
    */
   this.createTask = (task) => {
+    actions.waitForInvisible(this.loading);
     actions.clickToElement(this.addTaskLink);
     actions.enterText(this.taskInput, task);
     actions.clickToElement(this.submitButton);

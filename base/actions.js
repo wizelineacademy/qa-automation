@@ -62,5 +62,15 @@ const Actions = function () {
     browser.wait(isPresent, 30000);
     return element.isDisplayed();
   };
+
+  /**
+   * @description Wait for element to be invisible
+   * @method waitForInvisible
+   * @param {webElement} elem
+   */
+  this.waitForInvisible = (elem) => {
+    const isNotVisible = EC.invisibilityOf(elem);
+    browser.wait(isNotVisible, 4000, 'Element is visible');
+  };
 }
 module.exports = new Actions();
