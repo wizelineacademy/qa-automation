@@ -9,7 +9,7 @@ describe("SignIn into the Site", function() {
         browser.sleep(6000);
         loginPage.enterUserCredentials(email, pass);
         browser.sleep(6000);
-        expect(tasksPage.todayLabel.isPresent()).toBe(true);
+        expect(tasksPage.agendaView.isPresent()).toBe(true);
     });
 
     it("Create a task", function() {
