@@ -10,7 +10,7 @@ beforeAll(function () {
 describe("SignIn into the Site", function() {
     it("Enter application", function() {
         loginPage.enterUserCredentials(data.email, data.password);
-        expect(tasksPage.isAgendaViewDisplayed()).toBe(true);
+        expect(tasksPage.isTodayLabelDisplayed()).toBe(true);
     });
 
     it("Create a task", function() {
