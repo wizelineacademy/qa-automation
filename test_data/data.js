@@ -1,7 +1,6 @@
 const Data = function () {
-
-   this.email = 'YOUR_EMAIL';
-   this.password = 'YOUR_PASSWORD';
+   this.email = 'elbert.castaneda@gmail.com';
+   this.password = '$softwarE77';
    this.taskName = 'Some Task';
    this.taskUpdate = 'Updated Task';
  }
