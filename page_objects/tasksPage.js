@@ -5,7 +5,7 @@ const actions = require('../base/actions');
  */
 function TasksPage() {
   // Web elements for Tasks Page
-  this.todayLabel = element(by.css('.section_header a'));
+  this.todayLabel = element(by.id('agenda_view'));
   this.addTaskLink = element(by.css('.agenda_add_task a'));
   this.taskInput = element(by.css('.sel_richtext_editor'));
   this.submitButton = element(by.css('.submit_btn'));

@@ -1,3 +1,4 @@
+const SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 const env = require('node-env-file');
 env('.env');
 
@@ -30,7 +31,16 @@ exports.config = {
     },
 
     onPrepare: function() {
-        browser.ignoreSynchronization = true
+        browser.ignoreSynchronization = true;
+        // Configure jasmine spec reporter.
+        jasmine.getEnv().clearReporters(); // remove default reporter logs
+        jasmine.getEnv().addReporter(new SpecReporter({ // add jasmine-spec-reporter
+          spec: {
+            displayStacktrace: true,
+            displayPending: true
+          }
+        }));
+        // Maximize Window
         setTimeout(function() {
             browser.driver.executeScript(function() {
                 return {
