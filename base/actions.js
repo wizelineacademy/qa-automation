@@ -80,7 +80,9 @@ const Actions = function () {
    */
   this.hoverElement = (elem) => {
     const isClickable = EC.elementToBeClickable(elem);
+    var isPresent = EC.visibilityOf(elem);
     browser.wait(isClickable, 30000, 'Element is not hoverable');
+    browser.wait(isPresent, 4000, 'Element is visible');
     browser.actions().mouseMove(elem).perform();
   };
 }
