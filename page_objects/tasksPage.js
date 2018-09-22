@@ -44,6 +44,7 @@ function TasksPage() {
    * @method deleteTask
    */
   this.deleteTask = () => {
+    actions.hoverElement(this.tasksList.last());
     actions.clickToElement(this.taskMenuList.last());
     actions.clickToElement(this.deleteTaskOption);
     actions.clickToElement(this.deleteButton);

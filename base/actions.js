@@ -72,5 +72,16 @@ const Actions = function () {
     const isNotVisible = EC.invisibilityOf(elem);
     browser.wait(isNotVisible, 4000, 'Element is visible');
   };
+
+  /**
+   * @description Wait for element to be clickable and hover to element
+   * @method hoverElement
+   * @param {webElement} elem
+   */
+  this.hoverElement = (elem) => {
+    const isClickable = EC.elementToBeClickable(elem);
+    browser.wait(isClickable, 30000, 'Element is not hoverable');
+    browser.actions().mouseMove(elem).perform();
+  };
 }
 module.exports = new Actions();
