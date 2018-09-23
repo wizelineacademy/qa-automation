@@ -14,7 +14,7 @@ exports.config = {
         }
     },
     specs: [
-        '../tests/sampleTest.js'
+        '../tests/homeworkTest.js'
     ],
 
     // Set the Url where browser will start.

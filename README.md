@@ -1,46 +1,21 @@
-# QA Automation Certification
-Repository created for the QA Automation Certification
+# JCBP Homework Activity
+Repository updated with JCBP Homework Activity
 
 # Goals
 
-* Define Page Models
-* Usage of the Page Object Pattern
-* Objects Locators best practices
-* Waits and code encapsulation
+* Open Sign In screen
+* Validate error message displayed on empty Email Field.
+* Fill email field.
+* Fill the customer form.
+* Validate Welcome Page is displayed.
 
 
 # Getting Started
 
 ### Prerequisites
 
-You need to have the following tools installed on your computer.
-
-Node.js v6.10.0 or higher.
-To install Node.js, download it from the Node.js webpage.
-
-### Install Git
-
-Install Git on your console, follow [this tutorial](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-
-### Instructions.
-Clone the repository in your local machine and create a new branch
-```
-git clone https://github.com/wizelineacademy/qa-automation.git
-cd qa-automation
-```
-
-### Installation
-Install package dependencies by running.
-
-```npm install```
-
-### Test Run
-
-Once you have the environmet set up, you will need to start Webdriver-Manager by running the following command.
-```
-webdriver-manager update && webdriver-manager start
-```
-Now, you have selenium server running locally, so, to run the tests you have execute the next command.
-```
-protractor confs/conf.js
-```
+* For this instance, the original repository files were left, just added page objects files defined for the homework with an "ap" at the beginning of the file, eg. apMain.js, apMyAccount and so on.
+* data.js updated with data required to fill the form. This would require to install casual.
+* env file modified to have the baseUrl for the homeworkTest file.
+* conf file modified to run only the homeWorkTest file.
+* homeworkTest.js file created to have the tests of the homework. 
