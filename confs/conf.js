@@ -1,4 +1,5 @@
 const env = require('node-env-file');
+let customReporter = require('../utils/customReporter');
 env('.env');
 
 exports.config = {
@@ -16,9 +17,10 @@ exports.config = {
     specs: [
         '../tests/sampleTest.js'
     ],
-
     // Set the Url where browser will start.
     baseUrl: process.env.URL,
+    // Set the default timeout for ExpectedConditions
+    defaultTimeout: 4000,
 
     framework: 'jasmine2',
     jasmineNodeOpts: {
@@ -31,6 +33,7 @@ exports.config = {
 
     onPrepare: function() {
         browser.ignoreSynchronization = true
+        jasmine.getEnv().addReporter(customReporter);
         setTimeout(function() {
             browser.driver.executeScript(function() {
                 return {

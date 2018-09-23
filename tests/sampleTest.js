@@ -1,31 +1,34 @@
 const data = require('../test_data/data');
-const page = require('../page_objects/page')
-const loginPage = require('../page_objects/loginPage');
-const tasksPage = require('../page_objects/tasksPage');
+const page = require('../page_objects/page');
+const logger = require('../base/logger');
+const landingPage = require('../page_objects/landingPage');
+const authPage = require('../page_objects/authenticationPage');
 
 beforeAll(function () {
   page.openUrl()
 })
 
-describe("SignIn into the Site", function() {
-    it("Enter application", function() {
-        loginPage.enterUserCredentials(data.email, data.password);
-        expect(tasksPage.isAgendaViewDisplayed()).toBe(true);
+describe("Creating a new Account", function() {
+    it("Should display an error message when creating an account without email", function() {        
+        landingPage.clickSignIn();
+        authPage.clickCreateAccount();
+        expect(authPage.isEmailErrorDisplayed()).toBe(true);
     });
 
-    it("Create a task", function() {
-        tasksPage.createTask(data.taskName);
-        expect(tasksPage.getLastTaskText()).toEqual(data.taskName);
-    });
+  /* it("Should display an error message when creating an account without email", function() {        
+        landingPage.clickSignIn();
+        authPage.clickCreateAccount();
+        expect(authPage.isEmailErrorDisplayed()).toBe(true);
+    });*/
 
-    it("Update a task", function() {
-        tasksPage.updateTask(data.taskUpdate);
-        expect(tasksPage.getLastTaskText()).toEqual(data.taskUpdate);
-    });
+    // it("Update a task", function() {
+    //     tasksPage.updateTask(data.taskUpdate);
+    //     expect(tasksPage.getLastTaskText()).toEqual(data.taskUpdate);
+    // });
 
-    it("Delete a task", function() {
-        const initialListLength = tasksPage.getTasksCount();
-        tasksPage.deleteTask();
-        expect(tasksPage.getTasksCount()).not.toEqual(initialListLength);
-    });
+    // it("Delete a task", function() {
+    //     const initialListLength = tasksPage.getTasksCount();
+    //     tasksPage.deleteTask();
+    //     expect(tasksPage.getTasksCount()).not.toEqual(initialListLength);
+    // });
 });

@@ -3,63 +3,66 @@
 // so you can see all the Functions fo ExpectedConditions.
 const EC = protractor.ExpectedConditions;
 
-const Actions = function () {
+class Actions {
 
-    /**
-     * @description Wait for element to be clickable then perform click
-     * @method clickToElement
-     * @param {webElement}  element
-     */
-  this.clickToElement = function (element) {
+  constructor() {
+    this.defaultTimeout = browser.defaultTimeout;
+  }
+  /**
+   * @description Wait for element to be clickable then perform click
+   * @method clickElement
+   * @param {webElement}  element
+   */
+  clickElement(element) {
     var isClickable = EC.elementToBeClickable(element);
-    browser.wait(isClickable, 30000, 'Element is not clickable');
+    this.wait(isClickable, 'Element is not clickable');
     element.click();
   };
 
-    /**
-     * @description Wait for element to be visible then getText
-     * @method getElementText
-     * @param {webElement} element
-     * @return {String}
-     */
-  this.getElementText = function (element) {
+  /**
+   * @description Wait for element to be visible then getText
+   * @method getElementText
+   * @param {webElement} element
+   * @return {String}
+   */
+  getElementText(element) {
     var isVisible = EC.visibilityOf(element);
-    browser.wait(isVisible, 30000);
+    this.wait(isVisible, 'Element was not visible');
     return element.getText();
   };
 
-    /**
-     * @description Wait for element to be visible then sendKeys.
-     * @method enterText
-     * @param {webElement} element
-     * @param {String} text
-     */
-  this.enterText = function (element, text) {
+  /**
+   * @description Wait for element to be visible then sendKeys.
+   * @method enterText
+   * @param {webElement} element
+   * @param {String} text
+   */
+  enterText(element, text) {
     var isVisible = EC.visibilityOf(element);
-    browser.wait(isVisible, 30000);
+    this.wait(isVisible, 'Element was not visible');
     element.sendKeys(text);
   };
 
-    /**
-     * @description Wait for element to be visible then clear box.
-     * @method clearElementText
-     * @param {webElement} element
-     */
-  this.clearElementText = function (element) {
+  /**
+   * @description Wait for element to be visible then clear box.
+   * @method clearElementText
+   * @param {webElement} element
+   */
+  clearElementText(element) {
     var isPresent = EC.visibilityOf(element);
-    browser.wait(isPresent, 30000);
+    this.wait(isPresent, 'Element was not present when trying to clear it out');
     element.clear();
   };
 
-    /**
-     * @description Wait for element to be visible then verify if element is displayed.
-     * @method isElementDisplayed
-     * @param {webElement} element
-     * @return {bool}
-     */
-  this.isElementDisplayed = function (element) {
+  /**
+   * @description Wait for element to be visible then verify if element is displayed.
+   * @method isElementDisplayed
+   * @param {webElement} element
+   * @return {bool}
+   */
+  isElementDisplayed(element) {
     var isPresent = EC.visibilityOf(element);
-    browser.wait(isPresent, 30000);
+    this.wait(isPresent, 'Element was not visible')
     return element.isDisplayed();
   };
 
@@ -68,20 +71,24 @@ const Actions = function () {
    * @method waitForInvisible
    * @param {webElement} elem
    */
-  this.waitForInvisible = (elem) => {
+  waitForInvisible(elem) {
     const isNotVisible = EC.invisibilityOf(elem);
-    browser.wait(isNotVisible, 4000, 'Element is visible');
+    this.wait(isNotVisible, 4000, 'Element is visible');
   };
-  
+
   /**
    * @description Wait for element to be clickable and hover to element
    * @method hoverElement
    * @param {webElement} elem
    */
-  this.hoverElement = (elem) => {
+  hoverElement(elem) {
     const isClickable = EC.elementToBeClickable(elem);
-    browser.wait(isClickable, 30000, 'Element is not hoverable');
+    this.wait(isClickable, 'Element is not hoverable');
     browser.actions().mouseMove(elem).perform();
   };
+
+  wait(condition, errMessage, timeout = this.defaultTimeout) {
+    browser.wait(condition, timeout, errMessage);
+  }
 }
 module.exports = new Actions();
