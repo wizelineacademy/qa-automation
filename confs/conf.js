@@ -1,4 +1,5 @@
 const env = require('node-env-file');
+const jasmine = require('jasmine');
 env('.env');
 
 exports.config = {
@@ -14,7 +15,7 @@ exports.config = {
         }
     },
     specs: [
-        '../tests/sampleTest.js'
+        '../tests/accountCreation.js'
     ],
 
     // Set the Url where browser will start.
@@ -26,7 +27,7 @@ exports.config = {
         isVerbose: true,
         realtimeFailure: true,
         includeStackTrace: true,
-        defaultTimeoutInterval: 1200000
+        defaultTimeoutInterval: 1200000,
     },
 
     onPrepare: function() {

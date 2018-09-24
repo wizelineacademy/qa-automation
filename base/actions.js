@@ -6,60 +6,90 @@ const EC = protractor.ExpectedConditions;
 const Actions = function () {
 
     /**
-     * @description Wait for element to be clickable then perform click
-     * @method clickToElement
-     * @param {webElement}  element
+     * @description Wait for element to be visible then perform click of option selected by value
+     * @method selectOptionByValue
+     * @param {webElement}  element Select element
      */
+  this.selectOptionByValue = function(element, value) {
+    let option = element.all(by.css(`option`)).first();
+    if (value) {
+      option = element.all(by.css(`option[value="${value}"]`)).first();
+    } else {
+      const isClickable = EC.elementToBeClickable(option);
+      browser.wait(isClickable, 5000, 'Option is not clickable');
+    }
+
+    option.click();
+  };
+
+  /**
+   * @description Wait for element to be clickable then perform click
+   * @method clickToElement
+   * @param {webElement}  element
+   */
   this.clickToElement = function (element) {
-    var isClickable = EC.elementToBeClickable(element);
-    browser.wait(isClickable, 30000, 'Element is not clickable');
+    const isClickable = EC.elementToBeClickable(element);
+    browser.wait(isClickable, 5000, 'Element is not clickable');
     element.click();
   };
 
-    /**
-     * @description Wait for element to be visible then getText
-     * @method getElementText
-     * @param {webElement} element
-     * @return {String}
-     */
+  /**
+   * @description Wait for element to be visible then getText
+   * @method getElementText
+   * @param {webElement} element
+   * @return {String}
+   */
   this.getElementText = function (element) {
-    var isVisible = EC.visibilityOf(element);
-    browser.wait(isVisible, 30000);
+    const isVisible = EC.visibilityOf(element);
+    browser.wait(isVisible, 5000);
     return element.getText();
   };
 
-    /**
-     * @description Wait for element to be visible then sendKeys.
-     * @method enterText
-     * @param {webElement} element
-     * @param {String} text
-     */
+  /**
+   * @description Wait for element to be visible then sendKeys.
+   * @method enterText
+   * @param {webElement} element
+   * @param {String} text
+   */
   this.enterText = function (element, text) {
-    var isVisible = EC.visibilityOf(element);
-    browser.wait(isVisible, 30000);
+    const isVisible = EC.visibilityOf(element);
+    browser.wait(isVisible, 5000);
     element.sendKeys(text);
   };
 
-    /**
-     * @description Wait for element to be visible then clear box.
-     * @method clearElementText
-     * @param {webElement} element
-     */
+  /**
+   * @description Wait for element to be visible then clear box and sendKeys.
+   * @method clearEnterText
+   * @param {webElement} element
+   * @param {String} text
+   */
+  this.clearEnterText = function (element, text) {
+    const isVisible = EC.visibilityOf(element);
+    browser.wait(isVisible, 5000);
+    element.clear();
+    element.sendKeys(text);
+  };
+
+  /**
+   * @description Wait for element to be visible then clear box.
+   * @method clearElementText
+   * @param {webElement} element
+   */
   this.clearElementText = function (element) {
-    var isPresent = EC.visibilityOf(element);
-    browser.wait(isPresent, 30000);
+    const isPresent = EC.visibilityOf(element);
+    browser.wait(isPresent, 5000);
     element.clear();
   };
 
-    /**
-     * @description Wait for element to be visible then verify if element is displayed.
-     * @method isElementDisplayed
-     * @param {webElement} element
-     * @return {bool}
-     */
+  /**
+   * @description Wait for element to be visible then verify if element is displayed.
+   * @method isElementDisplayed
+   * @param {webElement} element
+   * @return {bool}
+   */
   this.isElementDisplayed = function (element) {
-    var isPresent = EC.visibilityOf(element);
-    browser.wait(isPresent, 30000);
+    const isPresent = EC.visibilityOf(element);
+    browser.wait(isPresent, 5000);
     return element.isDisplayed();
   };
 
@@ -70,20 +100,8 @@ const Actions = function () {
    */
   this.waitForInvisible = (elem) => {
     const isNotVisible = EC.invisibilityOf(elem);
-    browser.wait(isNotVisible, 4000, 'Element is visible');
-  };
-  
-  /**
-   * @description Wait for element to be clickable and hover to element
-   * @method hoverElement
-   * @param {webElement} elem
-   */
-  this.hoverElement = (elem) => {
-    const isClickable = EC.elementToBeClickable(elem);
-    var isPresent = EC.visibilityOf(elem);
-    browser.wait(isClickable, 30000, 'Element is not hoverable');
-    browser.wait(isPresent, 4000, 'Element is visible');
-    browser.actions().mouseMove(elem).perform();
+    browser.wait(isNotVisible, 5000, 'Element is visible');
   };
 }
+
 module.exports = new Actions();
