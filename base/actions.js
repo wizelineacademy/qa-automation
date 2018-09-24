@@ -17,18 +17,6 @@ const Actions = function () {
   };
 
     /**
-     * @description Wait for element to be visible then getText
-     * @method getElementText
-     * @param {webElement} element
-     * @return {String}
-     */
-  this.getElementText = function (element) {
-    var isVisible = EC.visibilityOf(element);
-    browser.wait(isVisible, 30000);
-    return element.getText();
-  };
-
-    /**
      * @description Wait for element to be visible then sendKeys.
      * @method enterText
      * @param {webElement} element
@@ -73,15 +61,20 @@ const Actions = function () {
     browser.wait(isNotVisible, 4000, 'Element is visible');
   };
   
-  /**
-   * @description Wait for element to be clickable and hover to element
-   * @method hoverElement
-   * @param {webElement} elem
-   */
-  this.hoverElement = (elem) => {
-    const isClickable = EC.elementToBeClickable(elem);
-    browser.wait(isClickable, 30000, 'Element is not hoverable');
-    browser.actions().mouseMove(elem).perform();
-  };
+  this.highlightElement = function(el){
+  console.log("highlight--");
+
+  console.log("locator---:"+el.locator());
+
+  return browser.driver.executeScript("arguments[0].setAttribute('style', arguments[1]);",el.getWebElement(), "border: 2px solid red;").
+  then(function(resp){
+    //browser.sleep(2000);
+    return el;
+  },function(err){
+    console.log("error is :"+err);
+  });
+};
+
+
 }
 module.exports = new Actions();
