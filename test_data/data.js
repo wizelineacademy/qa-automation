@@ -1,8 +1,20 @@
 const Data = function () {
-
-   this.email = 'YOUR_EMAIL';
-   this.password = 'YOUR_PASSWORD';
-   this.taskName = 'Some Task';
-   this.taskUpdate = 'Updated Task';
+   var casual = require('casual');
+   this.email = casual.email;
+   this.firstName = 'Guillermo';
+   this.lastName = 'Morales';
+   this.emailForm = casual.email;
+   this.passwordTextField = 'N3wPass2018';
+   this.addressFirstName = 'Guillermo';
+   this.addressLastName = 'Morales';
+   this.addressCompanyName = 'wizeline';
+   this.address = 'Kodak, 45050 Zapopan, Jal.';
+   this.addressSecondLine = 'Building 1';
+   this.addressCity = 'Zapopan';
+   this.addressZipCode = '45050';
+   this.additionalComments = 'Divide and conquer';
+   this.homePhone = '32356612';
+   this.mobilePhone = '3332388848';
+   this.addressAlias = 'TEST';
  }
  module.exports = new Data();
