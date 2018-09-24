@@ -1,44 +1,42 @@
-const data = require('../test_data/data');
-const page = require('../page_objects/page');
-const mainPage = require('../page_objects/mainPage');
-const loginPage = require('../page_objects/loginPage');
-const registerUser = require('../page_objects/registerUser');
-const userPage = require('../page_objects/userPage');
-/**
- * @description Test cases to verify web page if working ok.
- */
+var email = 'YOUR_MAIL';
+var pass = 'YOUR_PASSWORD';
 
-beforeAll(function () {
-  page.openUrl()
-})
-
-describe("Go to Sign In", function() {
-  /*This part is to verify if error msg is displayed when email-addrs is empty*/
-    it("Verify when email addrs is empty", function() {
-        mainPage.clickSign();
-        loginPage.clickSubmitCreate();
-        expect(loginPage.checkMsgError()).toBe(true);
+describe("SignIn into the Site", function() {
+    it("Enter application", function() {
+        browser.get('https://todoist.com/Users/showLogin#start');
+        browser.sleep(6000);
+        element(by.xpath('//*[@id="email"]')).sendKeys(email);
+        element(by.xpath('//*[@id="password"]')).sendKeys(pass);
+        element(by.xpath('//*[@id="login_form"]/a')).click();
+        browser.sleep(6000);
+        expect(element(by.xpath('//*[@id="agenda_view"]/div/div/h2/a')).isPresent()).toBe(true);
     });
 
-    /*This part is to verify if personal table is displayed when an invalid
-     *email is introduced*/
-    it("Using an invalid email address", function(){
-      mainPage.clickSign();
-      loginPage.enterEmailCreate('oerri#$%@inv.inv.in8v.com');
-      expect(loginPage.checkColum()).toBe(false);
+    it("Create a task", function() {
+        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[2]/a/span')).click();
+        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[2]/form/table[1]/tbody/tr/td/table/tbody/tr/td[1]/div')).sendKeys('Some task');
+        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[2]/form/table[2]/tbody/tr/td[1]/a[1]/span')).click();
+        browser.sleep(6000);
+        expect(element(by.css('.text.sel_item_content')).getText()).toEqual('Some task');
     });
 
-    /*This part is to verify if an account is created correctly when an valid
-     *email is passed*/
-    it("Create an account and verify if this one was created succesfully",
-    function(){
-      mainPage.clickSign();
-      loginPage.enterEmailCreate(data.registerEmail);
-      registerUser.putPersonalInformation(data.personalInformation);
-      registerUser.enterAdress(data.adress);
-      registerUser.registerButton();
-      expect(userPage.optionsVisible()).toBe(true);
-      userPage.logoutButton();
+    it("Update a task", function() {
+        element(by.css('.text.sel_item_content')).click();
+        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[3]/form/table[1]/tbody/tr/td/table/tbody/tr/td[1]/div')).clear();
+        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[3]/form/table[1]/tbody/tr/td/table/tbody/tr/td[1]/div')).sendKeys('Updated task');
+        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[3]/form/table[2]/tbody/tr/td[1]/a[1]/span')).click();
+        browser.sleep(6000);
+        expect(element(by.css('.text.sel_item_content')).getText()).toEqual('Updated task');
     });
 
+    it("Delete a task", function() {
+        browser.actions().mouseMove(element(by.css('.text.sel_item_content'))).perform();
+        browser.sleep(1000);
+        element(by.xpath('//li[contains(@class, "task_item")]/table/tbody/tr/td[4]/div')).click();
+        browser.sleep(1000);
+        element(by.xpath('/html/body/div[12]/table/tbody/tr[13]/td/div/div')).click();
+        element(by.xpath('//*[@id="GB_window"]/div/div[2]/div/div/div/div[3]/a[1]/span')).click();
+        browser.sleep(6000);
+        expect(element(by.css('.text.sel_item_content')).isPresent()).toBe(false);
+    });
 });
