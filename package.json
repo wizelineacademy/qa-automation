@@ -4,7 +4,7 @@
   "description": "Simple project for protractor usage",
   "main": "index.js",
   "scripts": {
-    "test": "protractor confs/conf.js"
+    "protractor-do-my-job" : "protractor confs/conf.js"
   },
   "repository": {
     "type": "git",
