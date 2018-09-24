@@ -1,0 +1,24 @@
+const Data = function () {
+   this.mainwebpage = 'http://automationpractice.com/index.php';
+   this.gender = 'male';
+   this.firstname = 'Noemi';
+   this.lastname = 'Hernandez';
+   this.email = 'abcdefghi@yahoo.com.mx';
+   this.password = '12345';
+   this.birthday = '19';
+   this.birthmonth = '3';
+   this.birthyear = '1988';
+   this.news = true;
+   this.offers = true;
+   this.company = 'Me';
+   this.ad1 = 'siempreviva 123';
+   this.ad2 = 'springfield';
+   this.city = 'springfield';
+   this.state = '1';
+   this.postcode = '12345';
+   this.info = 'blablablabalbalba';
+   this.homephone = '1234567890';
+   this.mobilephone = '1234567890';
+   this.alias = 'Nany';
+ }
+ module.exports = new Data();

@@ -1,42 +1,36 @@
-var email = 'YOUR_MAIL';
-var pass = 'YOUR_PASSWORD';
+var email = 'noemihv@gmail.com';
+var pass = 'JeParle';
+//import loginPage from '/Users/noemi/Documents/GitHub/qa-automation/tests/loginPage.js';
+//import tasksPage from '/Users/noemi/Documents/GitHub/qa-automation/tests/tasksPage.js';
+const loginPage = require('/Users/noemi/Documents/GitHub/qa-automation/tests/loginPage.js');
+const tasksPage = require('/Users/noemi/Documents/GitHub/qa-automation/tests/tasksPage.js');
 
 describe("SignIn into the Site", function() {
     it("Enter application", function() {
         browser.get('https://todoist.com/Users/showLogin#start');
         browser.sleep(6000);
-        element(by.xpath('//*[@id="email"]')).sendKeys(email);
-        element(by.xpath('//*[@id="password"]')).sendKeys(pass);
-        element(by.xpath('//*[@id="login_form"]/a')).click();
+        loginPage.entreUserCredentials(email, pass);
         browser.sleep(6000);
-        expect(element(by.xpath('//*[@id="agenda_view"]/div/div/h2/a')).isPresent()).toBe(true);
+        expect(taskPage.todayLabel.isPresent()).toBe(true);
     });
 
     it("Create a task", function() {
-        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[2]/a/span')).click();
-        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[2]/form/table[1]/tbody/tr/td/table/tbody/tr/td[1]/div')).sendKeys('Some task');
-        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[2]/form/table[2]/tbody/tr/td[1]/a[1]/span')).click();
+        tasksPage.createTask('Some Task');
         browser.sleep(6000);
-        expect(element(by.css('.text.sel_item_content')).getText()).toEqual('Some task');
+        expect(tasksPage.addTaskLink.isPresent()).toBe(true);
     });
 
     it("Update a task", function() {
-        element(by.css('.text.sel_item_content')).click();
-        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[3]/form/table[1]/tbody/tr/td/table/tbody/tr/td[1]/div')).clear();
-        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[3]/form/table[1]/tbody/tr/td/table/tbody/tr/td[1]/div')).sendKeys('Updated task');
-        element(by.xpath('//*[@id="agenda_view"]/div/ul/li[3]/form/table[2]/tbody/tr/td[1]/a[1]/span')).click();
+        tasksPage.updateTask('Updated task');
         browser.sleep(6000);
-        expect(element(by.css('.text.sel_item_content')).getText()).toEqual('Updated task');
+        expect(tasksPage.firstTaskContent.getText()).toEqual('Updated task');
     });
 
     it("Delete a task", function() {
-        browser.actions().mouseMove(element(by.css('.text.sel_item_content'))).perform();
-        browser.sleep(1000);
-        element(by.xpath('//li[contains(@class, "task_item")]/table/tbody/tr/td[4]/div')).click();
-        browser.sleep(1000);
-        element(by.xpath('/html/body/div[12]/table/tbody/tr[13]/td/div/div')).click();
-        element(by.xpath('//*[@id="GB_window"]/div/div[2]/div/div/div/div[3]/a[1]/span')).click();
+        tasksPage.deleteTask();
         browser.sleep(6000);
-        expect(element(by.css('.text.sel_item_content')).isPresent()).toBe(false);
+        expect(tasksPage.firstTaskContent.isPresent()).toBe(false);
     });
 });
+
+
