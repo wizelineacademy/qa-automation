@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
 
@@ -11,8 +13,18 @@ exports.config = {
         }
     },
     specs: [
-        '../tests/sampleTest.js'
+        '../tests/registerTests.js'
     ],
+    
+    baseUrl: process.env.BASE_URL,
+    params: {
+        user: {
+            admin: {
+                email: process.env.EMAIL,
+                password: process.env.PASS
+            }
+        }
+    },
 
     framework: 'jasmine2',
     jasmineNodeOpts: {

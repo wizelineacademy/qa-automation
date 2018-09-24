@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/wizelineacademy/qa-automation#readme",
   "dependencies": {
+    "dotenv": "^6.0.0",
+    "faker": "^4.1.0",
     "protractor": "^5.1.2",
     "webdriver-manager": "^12.0.6"
   }
