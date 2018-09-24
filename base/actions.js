@@ -72,7 +72,7 @@ const Actions = function () {
     const isNotVisible = EC.invisibilityOf(elem);
     browser.wait(isNotVisible, 4000, 'Element is visible');
   };
-  
+
   /**
    * @description Wait for element to be clickable and hover to element
    * @method hoverElement

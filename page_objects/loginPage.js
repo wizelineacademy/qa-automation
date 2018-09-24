@@ -3,22 +3,34 @@ const actions = require('../base/actions');
 /**
  * @description Page Object for Login Page.
  */
-function LoginPage() {
-  // Web elements for Login
-  this.emailTextField = element(by.id('email'));
-  this.passwordTextField = element(by.id('password'));
-  this.loginButton = element(by.css('.sel_login'));
 
-  /**
-   * @description Function used to enter credentials for Login then click on Login Button
-   * @method enterUserCredentials
-   * @param {String} email
-   * @param {String} pass
-   */
-  this.enterUserCredentials = (email, pass) => {
-    actions.enterText(this.emailTextField, email);
-    actions.enterText(this.passwordTextField, pass);
-    actions.clickToElement(this.loginButton);
-  };
+var loginPage = function() {
+  this.createAccoutError = element(by.id("create_account_error"));
+  this.submitCreate = element(by.id("SubmitCreate"));
+  this.emailCreate = element(by.id("email_create"));
+  this.authentication = element(by.id("center_colum"));
+
+  this.enterEmailCreate = function(email) {
+    actions.enterText(this.emailCreate, email);
+    actions.clickToElement(this.submitCreate);
+  }
+
+  this.clickSubmitCreate = function() {
+    actions.clickToElement(this.submitCreate);
+  }
+
+  this.checkMsgError = function() {
+    return actions.isElementDisplayed(this.createAccoutError);
+  }
+
+  this.checkColum = function() {
+    return actions.isElementDisplayed(this.submitCreate);
+  }
+
+  this.loginUser = function (username, password) {
+    actions.enterText(this.emailLogin, username)
+    actions.enterText(this.password, password)
+    actions.clickToElement(this.signInButton)
+  }
 }
-module.exports = new LoginPage();
+module.exports = new loginPage();
