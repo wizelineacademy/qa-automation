@@ -1,4 +1,4 @@
-# QA Automation Certification Fork and PR test
+# QA Automation Certification Fork and PR test 2
 Repository created for the QA Automation Certification
 
 # Goals
