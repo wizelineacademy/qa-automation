@@ -1,5 +1,6 @@
 const env = require('node-env-file');
 env('.env');
+var HtmlReporter = require('protractor-beautiful-reporter');
 
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
@@ -14,8 +15,15 @@ exports.config = {
         }
     },
     specs: [
-        '../tests/sampleTest.js'
+        '../tests/loginTest.js'
     ],
+
+    onPrepare: function() {
+      // Add a screenshot reporter and store screenshots to `/tmp/screenshots`:
+      jasmine.getEnv().addReporter(new HtmlReporter({
+         baseDirectory: 'output/reports'
+      }).getJasmine2Reporter());
+   },
 
     // Set the Url where browser will start.
     baseUrl: process.env.URL,
