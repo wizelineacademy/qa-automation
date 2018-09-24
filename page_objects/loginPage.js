@@ -3,22 +3,37 @@ const actions = require('../base/actions');
 /**
  * @description Page Object for Login Page.
  */
-function LoginPage() {
-  // Web elements for Login
-  this.emailTextField = element(by.id('email'));
-  this.passwordTextField = element(by.id('password'));
-  this.loginButton = element(by.css('.sel_login'));
+function LoginPage () {
+
+  this.createAccountForm = element(by.css('#create-account_form'));
+  this.loginForm = element(by.css('#login_form'));
+  this.emailCreateTextBox = element(by.id('email_create'));
+  this.errorEmailCreateMessage = element(by.css('#create_account_error > ol:nth-child(1) > li:nth-child(1)'));
+  this.createAccountButton = element(by.id('SubmitCreate'));
 
   /**
-   * @description Function used to enter credentials for Login then click on Login Button
+   * @description Function used to create a new account
    * @method enterUserCredentials
    * @param {String} email
-   * @param {String} pass
    */
-  this.enterUserCredentials = (email, pass) => {
-    actions.enterText(this.emailTextField, email);
-    actions.enterText(this.passwordTextField, pass);
-    actions.clickToElement(this.loginButton);
+  this.enterNewEmail = (email) => {
+    actions.enterText(this.emailCreateTextBox, email);
+    this.clickOnNewAccount();
   };
+  /**
+   * @description Function to just clic the "New Account" button.
+   * @method enterUserCredentials
+   * @param {String} email
+   */
+  this.clickOnNewAccount = () =>{
+    actions.clickToElement(this.createAccountButton);
+  };
+  /**
+   * @description Function used to know if a error is displayed
+   * @method isLoginFormDisplayed
+   */
+  this.isDisplayed = (element) => {
+    return actions.isElementDisplayed(element);
+  }
 }
 module.exports = new LoginPage();

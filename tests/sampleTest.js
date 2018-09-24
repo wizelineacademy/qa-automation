@@ -1,31 +1,35 @@
 const data = require('../test_data/data');
 const page = require('../page_objects/page')
 const loginPage = require('../page_objects/loginPage');
-const tasksPage = require('../page_objects/tasksPage');
+const nav = require('../page_objects/nav');
+const newAccount = require('../page_objects/newAccount');
 
 beforeAll(function () {
   page.openUrl()
 })
 
-describe("SignIn into the Site", function() {
-    it("Enter application", function() {
-        loginPage.enterUserCredentials(data.email, data.password);
-        expect(tasksPage.isAgendaViewDisplayed()).toBe(true);
+describe("Create new account", function() {
+    it("Navigate to login page", function() {
+        nav.goLoginPage();
+        expect(loginPage.isDisplayed(loginPage.createAccountForm) 
+            && loginPage.isDisplayed(loginPage.loginForm)).toBe(true);
     });
-
-    it("Create a task", function() {
-        tasksPage.createTask(data.taskName);
-        expect(tasksPage.getLastTaskText()).toEqual(data.taskName);
+    it("Validate new account form", function(){
+        loginPage.clickOnNewAccount();
+        expect(loginPage.isDisplayed(loginPage.errorEmailCreateMessage)).toBe(true);
     });
-
-    it("Update a task", function() {
-        tasksPage.updateTask(data.taskUpdate);
-        expect(tasksPage.getLastTaskText()).toEqual(data.taskUpdate);
+    it('Go to new account', function() {
+        loginPage.enterNewEmail(data.userPre);
+        loginPage.clickOnNewAccount();
+        expect(newAccount.validateNewForm(data.userPre,data.defaultAlias)).toBe(true);
     });
-
-    it("Delete a task", function() {
-        const initialListLength = tasksPage.getTasksCount();
-        tasksPage.deleteTask();
-        expect(tasksPage.getTasksCount()).not.toEqual(initialListLength);
+    it('Fill data for New Account', function(){
+        newAccount.fillInputs(data.userInfo);
+        expect(newAccount.validateFilledForm(data.userInfo)).toBe(true);
+       
+    });
+    it('Create new account', function () {
+        newAccount.createNewAccount();
+        expect(nav.checkProfileName()).toBe(true);
     });
 });

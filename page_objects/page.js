@@ -2,12 +2,8 @@
  * @description Open url to specific URL.
  */
 var Page = function () {
-  this.openUrl = function (path) {
-    if (typeof path !== 'undefined') {
-      browser.get(path);
-    } else {
-      browser.get(browser.baseUrl);
-    }
+  this.openUrl = function (path = browser.baseUrl) {
+    browser.get(path);
   }
 }
 module.exports = new Page();

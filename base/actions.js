@@ -83,5 +83,18 @@ const Actions = function () {
     browser.wait(isClickable, 30000, 'Element is not hoverable');
     browser.actions().mouseMove(elem).perform();
   };
+/**
+   * @description Select an element into a drop box
+   * @method selectDropDown
+   * @param {webElement, option} 
+   */
+  this.selectDropDown = (element , option) => {
+    var isVisible = EC.visibilityOf(element);
+    browser.wait(isVisible, 30000);
+    element.all(by.tagName('option'))   
+      .then(function(options){
+        options[option].click();
+      });
+  }
 }
 module.exports = new Actions();

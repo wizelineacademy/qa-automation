@@ -5,13 +5,9 @@ exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
 
     capabilities: {
-        browserName: 'chrome',
-        shardTestFiles: true,
-        chromeOptions: {
-            prefs: {
-                'profile.managed_default_content_settings.notifications': 1
-            }
-        }
+        browserName: 'firefox',
+        shardTestFiles: true
+        
     },
     specs: [
         '../tests/sampleTest.js'
