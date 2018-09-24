@@ -25,8 +25,12 @@
   },
   "homepage": "https://github.com/wizelineacademy/qa-automation#readme",
   "dependencies": {
+    "casual": "^1.5.19",
     "node-env-file": "^0.1.8",
     "protractor": "^5.1.2",
     "webdriver-manager": "^12.0.6"
+  },
+  "devDependencies": {
+    "protractor-beautiful-reporter": "^1.2.5"
   }
 }
