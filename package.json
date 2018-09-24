@@ -1,0 +1,25 @@
+{
+  "name": "qa-automation",
+  "version": "1.0.0",
+  "description": "Simple project for protractor usage",
+  "main": "index.js",
+  "scripts": {
+    "test": "protractor confs/conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wizelineacademy/qa-automation.git"
+  },
+  "keywords": [
+    "protractor"
+  ],
+  "author": "Marco De Jesus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wizelineacademy/qa-automation/issues"
+  },
+  "homepage": "https://github.com/wizelineacademy/qa-automation#readme",
+  "devDependencies": {
+    "jasmine": "^3.2.0"
+  }
+}
