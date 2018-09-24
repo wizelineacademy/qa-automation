@@ -1,3 +1,5 @@
+const validators = require('../utilities/validators');
+
 function LoginPage(){
 
     this.emailAddresTextField = element(by.id("email_create"));
@@ -7,7 +9,7 @@ function LoginPage(){
 	this.createAnAccount = (email_address) => {
         this.emailAddresTextField.clear();
         this.emailAddresTextField.sendKeys(email_address);
-		this.createAnAccountButton.click();
+        this.createAnAccountButton.click();
 	}
 }
 
