@@ -1,18 +1,18 @@
+const env = require('node-env-file');
+env('.env');
+
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
 
     capabilities: {
-        browserName: 'chrome',
-        shardTestFiles: true,
-        chromeOptions: {
-            prefs: {
-                'profile.managed_default_content_settings.notifications': 1
-            }
-        }
+      browserName: 'firefox'
     },
     specs: [
-        '../tests/sampleTest.js'
+        '../tests/PracticeTests.js'
     ],
+
+    // Set the Url where browser will start.
+    baseUrl: process.env.URL,
 
     framework: 'jasmine2',
     jasmineNodeOpts: {
@@ -28,7 +28,7 @@ exports.config = {
         setTimeout(function() {
             browser.driver.executeScript(function() {
                 return {
-                    width: window.screen.availWidth,
+                    width: (window.screen.availWidth)/2,
                     height: window.screen.availHeight
                 }
             }).then(function(result) {

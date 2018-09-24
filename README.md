@@ -1,33 +1,13 @@
 # QA Automation Certification
-Repository created for the QA Automation Certification
+Repository created for the QA Automation Certification - Task 1
+http://automationpractice.com/index.php
 
 # Goals
 
-* Define Page Models
-* Usage of the Page Object Pattern
-* Objects Locators best practices
-* Waits and code encapsulation
-
+1. Validate the empty email message on create account on empty email
+2. Complete a registration process
 
 # Getting Started
-
-### Prerequisites
-
-You need to have the following tools installed on your computer.
-
-Node.js v6.10.0 or higher.
-To install Node.js, download it from the Node.js webpage.
-
-### Install Git
-
-Install Git on your console, follow [this tutorial](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-
-### Instructions.
-Clone the repository in your local machine and create a new branch
-```
-git clone https://github.com/wizelineacademy/qa-automation.git
-cd qa-automation
-```
 
 ### Installation
 Install package dependencies by running.
