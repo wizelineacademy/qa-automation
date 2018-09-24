@@ -1,19 +1,20 @@
 const EC = protractor.ExpectedConditions;
+const TIMEOUT = 3000;
 
 class Actions {
   waitForVisible(element) {
     const isVisible = EC.visibilityOf(element);
-    browser.wait(isVisible, 3000, 'Element is not visible');
+    browser.wait(isVisible, TIMEOUT, 'Element is not visible');
   }
 
   waitForInvisible(element) {
     const isInvisible = EC.invisibilityOf(element);
-    browser.wait(isInvisible, 3000, 'Element is visible');
+    browser.wait(isInvisible, TIMEOUT, 'Element is visible');
   }
 
   waitForClickable(element) {
     const isClickable = EC.elementToBeClickable(element);
-    browser.wait(isClickable, 3000, 'Element is not clickable');
+    browser.wait(isClickable, TIMEOUT, 'Element is not clickable');
   }
 
   clickElement(element) {
@@ -44,6 +45,11 @@ class Actions {
   hoverElement(element) {
     this.waitForClickable(element);
     browser.actions().mouseMove(element).perform();
+  }
+
+  selectFromDropdown(element, option) {
+    // this.waitForClickable(element);
+    this.clickElement(element.get(option));
   }
 }
 

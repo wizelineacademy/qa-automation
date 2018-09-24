@@ -3,16 +3,14 @@ const actions = new Actions();
 
 class LoginPage {
   constructor() {
-    this.agendaView = element(by.id('agenda_view'));
-    this.emailTextField = element(by.id('email'));
-    this.loginForm = element(by.css('.sel_login'));
-    this.passwordTextField = element(by.id('password'));
+    this.createAccountButton = element(by.id('SubmitCreate'));
+    this.emailTextField = element(by.id('email_create'));
+    this.createAccountError = element(by.id('create_account_error'));
   }
 
-  enterUserCredentials(email, password) {
+  enterEmail(email) {
     actions.enterText(this.emailTextField, email);
-    actions.enterText(this.passwordTextField, password);
-    actions.clickElement(this.loginForm);
+    actions.clickElement(this.createAccountButton);
   }
 }
 

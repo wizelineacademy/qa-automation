@@ -13,8 +13,10 @@ exports.config = {
         }
     },
     specs: [
-        '../tests/sampleTest.js'
+        '../tests/registerTests.js'
     ],
+    
+    baseUrl: process.env.BASE_URL,
     params: {
         user: {
             admin: {
