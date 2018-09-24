@@ -12,6 +12,7 @@ class LandingPage {
     this.loginButton = element(by.css('.sel_login'));
     //bread crumbs to validate
     this.lblAuthenticationBreadCrumb = element(by.cssContainingText('.navigation_page',"Authentication"))
+    this.lblMyAccountBreadCrumb = element(by.cssContainingText('.navigation_page', "My account"))
   }
 
   /**
@@ -24,5 +25,10 @@ class LandingPage {
     actions.clickElement(this.btnSignIn); 
     actions.isElementDisplayed(this.lblAuthenticationBreadCrumb);   
   }   
+  isMyAccountBreadCrumbDisplayed()
+  {
+    logger.step('Validate that user is now in the "My Account" page')
+    return actions.isElementDisplayed(this.lblMyAccountBreadCrumb);
+  }
 }
 module.exports = new LandingPage();

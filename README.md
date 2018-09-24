@@ -2,52 +2,36 @@
 Repository created for the QA Automation Certification
 
 
-# Task Details
+# Task1 Highlights
 
-* I decided to give it a try to "class" objects for Pages instead functions, It seems to me that i looks cleaner because of the following reasons:
+* I decided to give it a try to "class" objects for Pages instead functions, It seems to me that i looks cleaner, just wanted to give it a try
+* Added a Test Step by step logger to easily reproduce tests (Each step being executed is displayed through the test execution)
+* Custom Jasmine reporter that matches the test step logger.
+* Implemented "Object builder" , which is a class that provides test objects to help out test harness
     
 ###Naming Convention for selectors:
-+----------+----------------------------+--------+-----------------+
-| Category |      UI/Control type       | Prefix |     Example     |
-+----------+----------------------------+--------+-----------------+
-| Basic    | Button                     | btn    | btnExit         |
-| Basic    | Check box                  | chk    | chkReadOnly     |
-| Basic    | Combo box                  | cbo    | cboEnglish      |
-| Basic    | Common dialog              | dlg    | dlgFileOpen     |
-| Basic    | Date picker                | dtp    | dtpPublished    |
-| Basic    | Dropdown List / Select tag | ddl    | ddlCountry      |
-| Basic    | Form                       | frm    | frmEntry        |
-| Basic    | Frame                      | fra    | fraLanguage     |
-| Basic    | Image                      | img    | imgIcon         |
-| Basic    | Label                      | lbl    | lblHelpMessage  |
-| Basic    | Links/Anchor Tags          | lnk    | lnkForgotPwd    |
-| Basic    | List box                   | lst    | lstPolicyCodes  |
-| Basic    | Menu                       | mnu    | mnuFileOpen     |
-| Basic    | Radio button / group       | rdo    | rdoGender       |
-| Basic    | RichTextBox                | rtf    | rtfReport       |
-| Basic    | Table                      | tbl    | tblCustomer     |
-| Basic    | TabStrip                   | tab    | tabOptions      |
-| Basic    | Text Area                  | txa    | txaDescription  |
-| Basic    | Text box                   | txt    | txtLastName     |
-| Complex  | Chevron                    | chv    | chvProtocol     |
-| Complex  | Data grid                  | dgd    | dgdTitles       |
-| Complex  | Data list                  | dbl    | dblPublisher    |
-| Complex  | Directory list box         | dir    | dirSource       |
-| Complex  | Drive list box             | drv    | drvTarget       |
-| Complex  | File list box              | fil    | filSource       |
-| Complex  | Panel/Fieldset             | pnl    | pnlGroup        |
-| Complex  | ProgressBar                | prg    | prgLoadFile     |
-| Complex  | Slider                     | sld    | sldScale        |
-| Complex  | Spinner                    | spn    | spnPages        |
-| Complex  | StatusBar                  | sta    | staDateTime     |
-| Complex  | Timer                      | tmr    | tmrAlarm        |
-| Complex  | Toolbar                    | tlb    | tlbActions      |
-| Complex  | TreeView                   | tre    | treOrganization |
+
+|     UI/Control type       | Prefix |     Example     |
+|---------------------------|--------|-----------------|
+|Button                     | btn    | btnExit         |
+|Check box                  | chk    | chkReadOnly     |
+|Combo box                  | cbo    | cboEnglish      |
+|Date picker                | dtp    | dtpPublished    |
+|Option (In select)         | opt    | optNumber       |
+|Dropdown List / Select tag | sel    | ddlCountry      |
+|Image                      | img    | imgIcon         |
+|Label                      | lbl    | lblHelpMessage  |
+|Links/Anchor Tags          | lnk    | lnkForgotPwd    |
+|List box                   | lst    | lstPolicyCodes  |
+|Menu                       | mnu    | mnuFileOpen     |
+|Radio button / group       | rdo    | rdoGender       |
+|Table                      | tbl    | tblCustomer     |
+|Text Area                  | txa    | txaDescription  |
+|Text box                   | txt    | txtLastName     |
+
 
 ###Features
-* Test Step by step logger to easily reproduce tests
-* Custom Jasmine reporter that matches the test step logger.
-* Test Resuls in HTML??
+
 
 # Goals
 

@@ -15,12 +15,12 @@ exports.config = {
         }
     },
     specs: [
-        '../tests/sampleTest.js'
+        '../tests/createAccountTests.js'
     ],
     // Set the Url where browser will start.
     baseUrl: process.env.URL,
     // Set the default timeout for ExpectedConditions
-    defaultTimeout: 4000,
+    defaultTimeout: 8000,
 
     framework: 'jasmine2',
     jasmineNodeOpts: {

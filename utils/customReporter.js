@@ -34,7 +34,7 @@ var consoleReporter = {
 
     specStarted: (spec) => {
         specStarted = new Date();
-        log(`Running Test: ${spec.description.trim()} `)
+        log(`${colors.heading()}Running Test: ${spec.description.trim()} ${colors.neutral()} `)
     },
 
     specDone: (spec) => {

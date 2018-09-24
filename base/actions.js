@@ -5,9 +5,6 @@ const EC = protractor.ExpectedConditions;
 
 class Actions {
 
-  constructor() {
-    this.defaultTimeout = browser.defaultTimeout;
-  }
   /**
    * @description Wait for element to be clickable then perform click
    * @method clickElement
@@ -87,8 +84,8 @@ class Actions {
     browser.actions().mouseMove(elem).perform();
   };
 
-  wait(condition, errMessage, timeout = this.defaultTimeout) {
-    browser.wait(condition, timeout, errMessage);
+  wait(condition, errMessage, waitTimeout = 8000) {
+    browser.wait(condition, waitTimeout, errMessage);
   }
 }
 module.exports = new Actions();

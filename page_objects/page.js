@@ -5,6 +5,7 @@ var Page = function () {
   this.openUrl = function (path) {
     if (typeof path !== 'undefined') {
       browser.get(path);
+      browser.refresh();
     } else {
       browser.get(browser.baseUrl);
     }
