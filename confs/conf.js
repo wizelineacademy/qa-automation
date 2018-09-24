@@ -11,7 +11,7 @@ exports.config = {
         }
     },
     specs: [
-        '../tests/sampleTest.js'
+        '../tests/task1.js'
     ],
 
     framework: 'jasmine2',
