@@ -1,7 +1,10 @@
+const env = require('node-env-file');
+env('.env');
+
 const Data = function () {
 
-   this.email = 'YOUR_EMAIL';
-   this.password = 'YOUR_PASSWORD';
+   this.email = process.env.EMAIL;
+   this.password = process.env.PASSWORD;
    this.taskName = 'Some Task';
    this.taskUpdate = 'Updated Task';
  }
