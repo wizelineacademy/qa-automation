@@ -12,6 +12,7 @@ const Actions = function () {
      */
   this.clickToElement = function (element) {
     var isClickable = EC.elementToBeClickable(element);
+    browser.wait(EC.presenceOf(element), 5000);
     browser.wait(isClickable, 30000, 'Element is not clickable');
     element.click();
   };
@@ -69,7 +70,7 @@ const Actions = function () {
    * @param {webElement} elem
    */
   this.waitForInvisible = (elem) => {
-    const isNotVisible = EC.invisibilityOf(elem);
+    const isNotVisible = EC.stalenessOf(elem);
     browser.wait(isNotVisible, 4000, 'Element is visible');
   };
 
@@ -78,10 +79,11 @@ const Actions = function () {
    * @method hoverElement
    * @param {webElement} elem
    */
-  this.hoverElement = (elem) => {
+  this.hoverElement = (elem, elem2) => {
     const isClickable = EC.elementToBeClickable(elem);
     browser.wait(isClickable, 30000, 'Element is not hoverable');
     browser.actions().mouseMove(elem).perform();
+    browser.wait(EC.presenceOf(elem2), 5000);
   };
 }
 module.exports = new Actions();
