@@ -5,7 +5,7 @@
 jmeter -n -t api_tests.jmx -l results.jtl
 ```
 
-#Generate dashboard
+# Generate dashboard
 ```
 jmeter -g results.jtl -o dashboard
 ```
