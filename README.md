@@ -23,7 +23,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 cleanWs()
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '680a33c8-2462-4838-9d90-b8ed163d0ce7', url: 'git@github.com:wizelineacademy/qa-academy-performance.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/wizelineacademy/qa-academy-performance.git']]])
             }
         }
         stage('Performance tests') {
