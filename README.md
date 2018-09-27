@@ -1,11 +1,11 @@
 # qa-academy-performance
 
-# Run Jmeter non-gui mode
+## Run Jmeter non-gui mode
 ```
 jmeter -n -t api_tests.jmx -l results.jtl
 ```
 
-# Generate dashboard
+## Generate dashboard
 ```
 jmeter -g results.jtl -o dashboard
 ```
@@ -50,6 +50,6 @@ pipeline {
 }
 ```
 
-# Useful links
+## Useful links
 
 * [JMeter Plugins manager](https://jmeter-plugins.org/wiki/PluginsManager/)
