@@ -49,3 +49,7 @@ pipeline {
     }
 }
 ```
+
+# Useful links
+
+* [JMeter Plugins manager](https://jmeter-plugins.org/wiki/PluginsManager/)
