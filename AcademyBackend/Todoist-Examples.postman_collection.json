@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "aa10851d-8337-46fa-87c5-bdfa65190cb8",
+		"name": "Todoist- Scenarios Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a New Project",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6f99c0eb-65aa-4ef7-a423-79704ce885cd",
+						"type": "text/javascript",
+						"exec": [
+							"const projectName = 'New Project ' + parseInt(Math.random() * 10000);",
+							"pm.environment.set('projectName', projectName);",
+							"",
+							"pm.environment.set(\"expectedStatusCode\", 200);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "390f7376-9be0-4024-adce-6dd4a2e3712f",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Create A New Project\", () => {",
+							"    ",
+							"    it('Should match the expected schema', () => {",
+							"        response.body.should.have.schema({",
+							"            \"type\": \"object\",",
+							"            \"required\": [",
+							"                \"id\",",
+							"                \"name\",",
+							"                \"order\",",
+							"                \"indent\",",
+							"                \"comment_count\"",
+							"            ],",
+							"            \"properties\": {",
+							"                \"id\": {",
+							"                    \"type\": \"integer\"",
+							"                },",
+							"                \"name\": {",
+							"                    \"type\": \"string\",",
+							"                    \"pattern\": \"^(.*)$\"",
+							"                },",
+							"                \"order\": {",
+							"                    \"type\": \"integer\"",
+							"                },",
+							"                \"indent\": {",
+							"                    \"type\": \"integer\"",
+							"                },",
+							"                \"comment_count\": {",
+							"                    \"type\": \"integer\"",
+							"                }",
+							"            }",
+							"        });",
+							"    });",
+							"});",
+							"",
+							"pm.environment.set(\"projectId\", response.body.id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{projectName}} - Before Edit\"\n}"
+				},
+				"url": {
+					"raw": "{{TodoistProjectsBaseUrl}}",
+					"host": [
+						"{{TodoistProjectsBaseUrl}}"
+					]
+				},
+				"description": "Creates a new project\n\n- Body: {\"name\": \"Project Name\"}\n- Return all the information of the New Project"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Projects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b67e81c9-eab9-4dd9-9f66-28caa2e2a83d",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Get All Existing Projects\", () => {",
+							"    ",
+							"    it('Should match the expected schema', () => {",
+							"        response.body.should.have.schema({",
+							"            \"type\": \"array\", ",
+							"            \"items\": {",
+							"              \"type\": \"object\", ",
+							"             \"required\": [",
+							"               \"id\", ",
+							"               \"name\", ",
+							"               \"order\", ",
+							"               \"indent\", ",
+							"               \"comment_count\"",
+							"             ], ",
+							"             \"properties\": {",
+							"               \"id\": {",
+							"                 \"type\": \"integer\", ",
+							"               }, ",
+							"               \"name\": {",
+							"                 \"type\": \"string\", ",
+							"                 \"pattern\": \"^(.*)$\"",
+							"               }, ",
+							"               \"order\": {",
+							"                 \"type\": \"integer\", ",
+							"               }, ",
+							"               \"indent\": {",
+							"                 \"type\": \"integer\", ",
+							"               }, ",
+							"               \"comment_count\": {",
+							"                 \"type\": \"integer\", ",
+							"               }",
+							"             }",
+							"           }",
+							"        });",
+							"    });",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "02522a5f-01cf-4e6b-9d2d-7322136beae0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"expectedStatusCode\", 200);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{TodoistProjectsBaseUrl}}",
+					"host": [
+						"{{TodoistProjectsBaseUrl}}"
+					]
+				},
+				"description": "Get all existing projects"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "821390db-ffd0-47c5-b629-a2f3e39edb5a",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Delete A Project\", () => {",
+							"",
+							"})",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c0ecb11b-77ba-4411-ba21-1890ff8d855b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"expectedStatusCode\", 204);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{TodoistProjectsBaseUrl}}/{{projectId}}",
+					"host": [
+						"{{TodoistProjectsBaseUrl}}"
+					],
+					"path": [
+						"{{projectId}}"
+					]
+				},
+				"description": "Delete a specific project\n\n- Search by id\n- Return 204"
+			},
+			"response": []
+		}
+	]
+}
