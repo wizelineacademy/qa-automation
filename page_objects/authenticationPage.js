@@ -17,8 +17,8 @@ function AuthenticationPage() {
   this.getNavigationText = () => actions.getElementText(this.navigationText);
   
   /**
-   * @description Function usedto wait for the Navigation element and return its text
-   * @method getNavigationText
+   * @description Function used to wait for the Navigation element and return its text
+   * @method getCreateAccountErrorText
    */
   this.getCreateAccountErrorText = () => actions.getElementText(this.createAccountErrorText);
 

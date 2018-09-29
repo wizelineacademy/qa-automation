@@ -51,9 +51,12 @@ function AccountCreationPage() {
    * @method saveForm
    */
   this.saveForm = (data) => {
-    const genderElements = [this.idGender1RadioField, this.idGender2RadioField];
     // select in random, Mr. or Mrs. gender
-    actions.clickToElement(genderElements[Math.round(Math.random())]);
+    if (data['id_gender'] === '2') {
+      this.idGender2RadioField.click();
+    } else {
+      this.idGender1RadioField.click();
+    }
 
     actions.clearEnterText(this.customerFirstnameTextField, data['customer_firstname']);
     actions.clearEnterText(this.customerLastnameTextField, data['customer_lastname']);
