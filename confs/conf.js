@@ -1,3 +1,7 @@
+const env = require('node-env-file');
+env('.env');
+var HtmlReporter = require('protractor-beautiful-reporter');
+
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
 
@@ -13,6 +17,9 @@ exports.config = {
     specs: [
         '../tests/sampleTest.js'
     ],
+
+    // Set the Url where browser will start.
+    baseUrl: process.env.URL,
 
     framework: 'jasmine2',
     jasmineNodeOpts: {
@@ -35,5 +42,8 @@ exports.config = {
                 browser.driver.manage().window().setSize(result.width, result.height)
             })
         })
+        jasmine.getEnv().addReporter(new HtmlReporter({
+            baseDirectory: 'reports'
+           }).getJasmine2Reporter());
     }
 }
