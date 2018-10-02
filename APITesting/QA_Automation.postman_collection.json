@@ -1,0 +1,1513 @@
+{
+	"info": {
+		"_postman_id": "1e5d9ee0-4e1f-40ed-b4b2-eadef47f08db",
+		"name": "QA_Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "InstallPostmanBDD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fa304316-b846-4dae-9a55-9dc96b8d893d",
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable('postmanBDD', responseBody);"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ff4a1675-d0e0-401e-aa1f-11b9b4eb6ede",
+						"type": "text/javascript",
+						"exec": [
+							"if (!environment.postman_bdd_path) {    ",
+							"    postman.setGlobalVariable('postman_bdd_path', 'http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js');}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js",
+					"protocol": "http",
+					"host": [
+						"bigstickcarpet",
+						"com"
+					],
+					"path": [
+						"postman-bdd",
+						"dist",
+						"postman-bdd.min.js"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllProjects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a3d6ea57-2e66-496c-9b97-2bfc63587467",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"     ",
+							"    it('Should return a JSON response', () => {",
+							"      response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Should response a Http 200 OK\", () => {",
+							"      response.should.have.status(200)    ",
+							"    })",
+							"    ",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/projects",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewProjectEmptyName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "38433991-7b4f-4861-8106-4172e33a02ee",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"pm.environment.set(\"name\", response.body)",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it(\"Should response a Http 400 Bad Request\", () => {",
+							"      response.should.have.status(400)    ",
+							"    })",
+							"    ",
+							"    it(\"Should return a message Empty name\", () => {",
+							"      expect(pm.environment.get(\"name\")).to.equals(\"Empty name\\n\");",
+							"    })",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"\"\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/projects",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00a2aee1-8982-4245-aded-9d1e62fb0dab",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"var projectname = 'Pending'",
+							"pm.environment.set(\"projectId\", response.body.id)",
+							"pm.environment.set(\"name\", response.body.name)",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    ",
+							"    it('Should return a JSON response', () => {",
+							"      response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Should response a Http 200 OK\", () => {",
+							"      response.should.have.status(200)    ",
+							"    })",
+							"    ",
+							"    it(\"Should have the corret name: 'Pending'\", () => {",
+							"      expect(pm.environment.get(\"name\")).to.equals(projectname);",
+							"    })",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Pending\"\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/projects",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e417b45e-41bd-470e-9046-4eb549a0ebe8",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"var projectname = 'Pending'",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it('Should return a JSON response', () => {",
+							"      response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Should response a Http 200 OK\", () => {",
+							"      response.should.have.status(200)    ",
+							"    })",
+							"    ",
+							"    it(\"Should have the corret name: 'Pending'\", () => {",
+							"      expect(pm.environment.get(\"name\")).to.equals(projectname);",
+							"    })",
+							"    ",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd43d211-e27c-4bb4-a1fa-2b2a6a66928e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fad4b24e-bce7-4ca3-8efe-e493e379d3a0",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    /*it('Should return a JSON response', () => {",
+							"      response.should.be.null;",
+							"    })*/",
+							"    ",
+							"    it(\"Should response a Http 204 No Content\", () => {",
+							"      response.should.have.status(204)    ",
+							"    })",
+							"    ",
+							"",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"New Pending\"\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProjectNoNewData",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "59ba32dd-5c59-4607-bef4-c9c765600599",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it(\"Should response a Http 400 Bad Request\", () => {",
+							"      response.should.have.status(400)    ",
+							"    })",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUpdatedProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c568e504-6e8b-4286-a620-24ea9f0f1a23",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"var projectname = 'New Pending'",
+							"pm.environment.set(\"name\", response.body.name)",
+							"",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it('Should return a JSON response', () => {",
+							"      response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Should response a Http 200 OK\", () => {",
+							"      response.should.have.status(200)    ",
+							"    })",
+							"    ",
+							"    it(\"Should have the new name: 'New Pending'\", () => {",
+							"      expect(pm.environment.get(\"name\")).to.equals(projectname);",
+							"    })",
+							"    ",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetActiveTasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c91f7838-6e80-4fa8-ab3e-b60707231ddf",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it('Should return a JSON response', () => {",
+							"      response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Should response a Http 200 OK\", () => {",
+							"      response.should.have.status(200)    ",
+							"    })",
+							"    ",
+							"    ",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/tasks",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewTaskEmptyContent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "efce3639-a428-413b-b832-b9e550d0b118",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"pm.environment.set(\"taskName\", response.body)",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    it(\"Should response a Http 400 Bad Request\", () => {",
+							"      response.should.have.status(400)    ",
+							"    })",
+							"    ",
+							"    it(\"Should return a message Empty content\", () => {",
+							"      expect(pm.environment.get(\"taskName\")).to.equals(\"Empty content\\n\");",
+							"    })",
+							"",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"project_id\": {{projectId}},\n\t\"content\": \"\",\n\t\"due_string\": \"tomorrow at 12:00\",\n\t\"due_lang\": \"en\",\n\t\"priority\": 4\n\t\n}\n"
+				},
+				"url": {
+					"raw": "{{baseURL}}/tasks",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a384fb62-fe9e-47c6-831e-e1a447dfdffe",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"var task_name = 'Doctor appointment'",
+							"pm.environment.set(\"taskId\", response.body.id)",
+							"pm.environment.set(\"taskName\", response.body.content)",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    ",
+							"    it('Should return a JSON response', () => {",
+							"      response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Should response a Http 200 OK\", () => {",
+							"      response.should.have.status(200)    ",
+							"    })",
+							"    ",
+							"    it(\"Should have the corret name: 'Doctor appointment'\", () => {",
+							"      expect(pm.environment.get(\"taskName\")).to.equals(task_name);",
+							"    })",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"project_id\": {{projectId}},\n\t\"content\": \"Doctor appointment\",\n\t\"due_string\": \"tomorrow at 12:00\",\n\t\"due_lang\": \"en\",\n\t\"priority\": 4\n\t\n}\n"
+				},
+				"url": {
+					"raw": "{{baseURL}}/tasks",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetATask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66703061-5a97-4915-8a09-4e6565d3f100",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"var task_name = 'Doctor appointment'",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it('Should return a JSON response', () => {",
+							"      response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Should response a Http 200 OK\", () => {",
+							"      response.should.have.status(200)    ",
+							"    })",
+							"    ",
+							"    it(\"Should have the corret name: 'Doctor appointment'\", () => {",
+							"      expect(pm.environment.get(\"taskName\")).to.equals(task_name);",
+							"    })",
+							"    ",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd43d211-e27c-4bb4-a1fa-2b2a6a66928e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTaskPriority0(Invalid)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8492e708-c24d-47d2-bdfd-b8a82893f52f",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"pm.environment.set(\"priority\", response.body)",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    /*it('Should return a JSON response', () => {",
+							"      response.should.be.null;",
+							"    })*/",
+							"    ",
+							"    it(\"Should response a Http 400 Bad Request\", () => {",
+							"      response.should.have.status(400)    ",
+							"    })",
+							"    ",
+							"    it(\"Should display an error because the Priority = 0 doesn't exist\", () => {",
+							"      expect(pm.environment.get(\"priority\")).to.equals(\"At least one of supported fields should be set and non-empty\\n\");",
+							"    })",
+							"    ",
+							"",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"priority\": 0\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTaskPriority1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "382d1543-ed18-4c87-811b-2915442533a2",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it(\"Should response a Http 204 No Content\", () => {",
+							"      response.should.have.status(204)    ",
+							"    })",
+							"    ",
+							"",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"priority\": 1\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTaskPriority3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fad4b24e-bce7-4ca3-8efe-e493e379d3a0",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    /*it('Should return a JSON response', () => {",
+							"      response.should.be.null;",
+							"    })*/",
+							"    ",
+							"    it(\"Should response a Http 204 No Content\", () => {",
+							"      response.should.have.status(204)    ",
+							"    })",
+							"    ",
+							"",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"priority\": 3\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTaskContent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fad4b24e-bce7-4ca3-8efe-e493e379d3a0",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    /*it('Should return a JSON response', () => {",
+							"      response.should.be.null;",
+							"    })*/",
+							"    ",
+							"    it(\"Should response a Http 204 No Content\", () => {",
+							"      response.should.have.status(204)    ",
+							"    })",
+							"    ",
+							"",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"New doctor appointment\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUpdatedTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6991351-6c5d-491a-b744-5d6eecb0c885",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"var task_name = 'New doctor appointment'",
+							"pm.environment.set(\"taskName\", response.body.content)",
+							"pm.environment.set(\"priority\", response.body.priority)",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it('Should return a JSON response', () => {",
+							"      response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Should response a Http 200 OK\", () => {",
+							"      response.should.have.status(200)    ",
+							"    })",
+							"    ",
+							"    it(\"Should have the updated name: 'New doctor appoinment'\", () => {",
+							"      expect(pm.environment.get(\"taskName\")).to.equals(task_name);",
+							"    })",
+							"    ",
+							"    it(\"Should have the updated priority: '3'\", () => {",
+							"      expect(pm.environment.get(\"priority\")).to.equals(3);",
+							"    })",
+							"    ",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd43d211-e27c-4bb4-a1fa-2b2a6a66928e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CloseTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "48b15347-a2f6-40ac-b479-89f75b801d2e",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it(\"Should response a Http 204 No Content\", () => {",
+							"      response.should.have.status(204)    ",
+							"    })",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n\n"
+				},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}/close",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}",
+						"close"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetClosedTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "54855f37-f504-4539-833c-690df9c02607",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"pm.environment.set(\"task\", response.body)",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    it(\"Should response a Http 404 Not Found\", () => {",
+							"      response.should.have.status(404)    ",
+							"    })",
+							"    ",
+							"    it(\"Should return a Not Found message\", () => {",
+							"      expect(pm.environment.get(\"task\")).to.equals(\"Not Found\\n\");",
+							"    })",
+							"    ",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd43d211-e27c-4bb4-a1fa-2b2a6a66928e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReopenTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fb3dbedc-10e2-484b-9e95-055cc2398358",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it(\"Should response a Http 204 No Content\", () => {",
+							"      response.should.have.status(204)    ",
+							"    })",
+							"    ",
+							"",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}/reopen",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}",
+						"reopen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetReopenedTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "784e3813-9fa2-4b0e-92ca-a3d1f4e2f95b",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"var task_name = 'New doctor appointment'",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it('Should return a JSON response', () => {",
+							"      response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Should response a Http 200 OK\", () => {",
+							"      response.should.have.status(200)    ",
+							"    })",
+							"    ",
+							"    it(\"Should have the corret name: 'New doctor appointment'\", () => {",
+							"      expect(pm.environment.get(\"taskName\")).to.equals(task_name);",
+							"    })",
+							"    ",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd43d211-e27c-4bb4-a1fa-2b2a6a66928e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "99312cff-77e7-48c5-a6a1-fc98c3ac9acc",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it(\"Should response a Http 204 OK\", () => {",
+							"      response.should.have.status(204)    ",
+							"    })",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "155e626d-f61b-4458-8ebb-cb583f08d6d9",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    /*it('Should return a JSON response', () => {",
+							"      response.should.be.null;",
+							"    })*/",
+							"    ",
+							"    it(\"Should response a Http 204 OK\", () => {",
+							"      response.should.have.status(204)    ",
+							"    })",
+							"    ",
+							"",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDeletedProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "58014c7a-3206-49da-94bb-ce90114f1530",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"pm.environment.set(\"project\", response.body)",
+							"",
+							"describe(\"Validate Request Data\", () =>{",
+							"    ",
+							"    it(\"Should response a Http 404 Not Found\", () => {",
+							"      response.should.have.status(404)    ",
+							"    })",
+							"    ",
+							"    it(\"Should return a Not Found message\", () => {",
+							"      expect(pm.environment.get(\"project\")).to.equals(\"Not Found\\n\");",
+							"    })",
+							"    ",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "fa36369f-98f1-40ed-b193-d41aa3f49ef7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "84ea4d99-342e-4947-8068-2cb6507f20fe",
+				"type": "text/javascript",
+				"exec": [
+					"/*describe(\"Validate Common Test\", () =>{",
+					"     ",
+					"    it(\"Response time is less than 200 miliseconds\", () => {",
+					"        expect(response.responseTime).to.be.below(200);",
+					"    })",
+					"    ",
+					"});*/",
+					"",
+					"",
+					"pm.test(\"Response time is less than 2000ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+					"});",
+					""
+				]
+			}
+		}
+	]
+}
