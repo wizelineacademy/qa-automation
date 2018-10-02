@@ -2,7 +2,7 @@
 	"info": {
 		"name": "QaAutomation",
 		"_postman_id": "198318ca-29bf-498b-b5a8-5845df5a8887",
-		"description": "",
+		"description": "Scripts for backend testing in Wizeline QA Certification Course",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
