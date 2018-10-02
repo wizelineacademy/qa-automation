@@ -1,0 +1,1771 @@
+{
+	"info": {
+		"_postman_id": "e09e1563-fda3-48f4-9a14-0b2ce5a5f9b8",
+		"name": "wizelineAutomationQA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Start Tests",
+			"item": [
+				{
+					"name": "Get  Projects without Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9068b1e1-585a-4a7d-afdb-c54adbc5fab6",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									" ",
+									"describe('Get projets without token', () => {",
+									"    it('reponse status should equal to 400', () => {",
+									"        response.status.should.equal(400);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Empty token\"', () => {",
+									"        response.body.trim().should.equal('Empty token');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseUrl}}/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  Projects with invalid Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d91fed8a-cd83-49e6-914c-da6f3bf75334",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									" ",
+									" describe('Get projets with invalid token', () => {",
+									"    it('reponse status should equal to 403', () => {",
+									"        response.status.should.equal(403);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Forbidden\"', () => {",
+									"        response.body.trim().should.equal('Forbidden');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{failToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseUrl}}/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "Get  Projects",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a3f59045-2db3-40fd-b74a-a9bc38c7056f",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"const schema =  {",
+									"   \"definitions\": {},",
+									"   \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+									"   \"$id\": \"http://example.com/root.json\",",
+									"   \"type\": \"array\",",
+									"   \"title\": \"The Root Schema\",",
+									"   \"items\": {",
+									"     \"$id\": \"#/items\",",
+									"     \"type\": \"object\",",
+									"     \"title\": \"The Items Schema\",",
+									"     \"required\": [",
+									"       \"id\",",
+									"       \"name\",",
+									"       \"order\",",
+									"       \"indent\",",
+									"       \"comment_count\"",
+									"     ],",
+									"     \"properties\": {",
+									"       \"id\": {",
+									"         \"$id\": \"#/items/properties/id\",",
+									"         \"type\": \"integer\",",
+									"         \"title\": \"The Id Schema\",",
+									"         \"default\": 0,",
+									"         \"examples\": [",
+									"           2195347366",
+									"         ]",
+									"       },",
+									"       \"name\": {",
+									"         \"$id\": \"#/items/properties/name\",",
+									"         \"type\": \"string\",",
+									"         \"title\": \"The Name Schema\",",
+									"         \"default\": \"\",",
+									"         \"examples\": [",
+									"           \"Inbox\"",
+									"         ],",
+									"         \"pattern\": \"^(.*)$\"",
+									"       },",
+									"       \"order\": {",
+									"         \"$id\": \"#/items/properties/order\",",
+									"         \"type\": \"integer\",",
+									"         \"title\": \"The Order Schema\",",
+									"         \"default\": 0,",
+									"         \"examples\": [",
+									"           0",
+									"         ]",
+									"       },",
+									"       \"indent\": {",
+									"         \"$id\": \"#/items/properties/indent\",",
+									"         \"type\": \"integer\",",
+									"         \"title\": \"The Indent Schema\",",
+									"         \"default\": 0,",
+									"         \"examples\": [",
+									"           1",
+									"         ]",
+									"       },",
+									"       \"comment_count\": {",
+									"         \"$id\": \"#/items/properties/comment_count\",",
+									"         \"type\": \"integer\",",
+									"         \"title\": \"The Comment_count Schema\",",
+									"         \"default\": 0,",
+									"         \"examples\": [",
+									"           0",
+									"         ]",
+									"       }",
+									"     }",
+									"   }",
+									" };",
+									" ",
+									" describe('Get projets endpoint', () => {",
+									"    it('reponse status should equal to 200 ', () => {",
+									"        response.status.should.equal(200);",
+									"    });",
+									"   ",
+									"   it('the response body schema validation result should equal to true', () => {",
+									"        const result=tv4.validateResult(response.body, schema);",
+									"        result.valid.should.equal(true);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseUrl}}/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d8271d93-23dd-4546-9f40-343290b0d0d1",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"pm.environment.set('currentProjectID', response.body.id);",
+									"pm.environment.set('currentProjectName', response.body.name);",
+									"const schema = {",
+									"  \"definitions\": {},",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+									"  \"$id\": \"http://example.com/root.json\",",
+									"  \"type\": \"object\",",
+									"  \"title\": \"The Root Schema\",",
+									"  \"required\": [",
+									"    \"id\",",
+									"    \"name\",",
+									"    \"order\",",
+									"    \"indent\",",
+									"    \"comment_count\"",
+									"  ],",
+									"  \"properties\": {",
+									"    \"id\": {",
+									"      \"$id\": \"#/properties/id\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Id Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        2196100668",
+									"      ]",
+									"    },",
+									"    \"name\": {",
+									"      \"$id\": \"#/properties/name\",",
+									"      \"type\": \"string\",",
+									"      \"title\": \"The Name Schema\",",
+									"      \"default\": \"\",",
+									"      \"examples\": [",
+									"        \"Books to read\"",
+									"      ],",
+									"      \"pattern\": \"^(.*)$\"",
+									"    },",
+									"    \"order\": {",
+									"      \"$id\": \"#/properties/order\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Order Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        3",
+									"      ]",
+									"    },",
+									"    \"indent\": {",
+									"      \"$id\": \"#/properties/indent\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Indent Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        1",
+									"      ]",
+									"    },",
+									"    \"comment_count\": {",
+									"      \"$id\": \"#/properties/comment_count\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Comment_count Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        0",
+									"      ]",
+									"    }",
+									"  }",
+									"};",
+									"const requestData = JSON.parse(request.data);",
+									"",
+									"describe('Create projet endpoint', () => {",
+									"    it('reponse status should equal to 200 ', () => {",
+									"        response.status.should.equal(200);",
+									"    });",
+									"    ",
+									"    it('reponse body id should be at least 1', () => {",
+									"        response.body.id.should.be.at.least(1);",
+									"    });",
+									"    ",
+									"    it('response body name should equal to name sent', () => {",
+									"        response.body.name.should.equal(requestData.name);",
+									"    });",
+									"   ",
+									"    it('the response body schema validation result should equal to true', () => {",
+									"        const result=tv4.validateResult(response.body, schema);",
+									"        result.valid.should.equal(true);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Books to read\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Project with invalid data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4661c5d7-d0f8-4e5a-9ce2-22db35641a31",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Create projet with invalid data', () => {",
+									"    it('reponse status should equal to 400', () => {",
+									"        response.status.should.equal(400);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Empty token\"', () => {",
+									"        response.body.trim().should.equal('Empty name');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"namee\": \"Books to read\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "453875d3-6d46-40f0-adf3-330b91d43f49",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"const schema = {",
+									"  \"definitions\": {},",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+									"  \"$id\": \"http://example.com/root.json\",",
+									"  \"type\": \"object\",",
+									"  \"title\": \"The Root Schema\",",
+									"  \"required\": [",
+									"    \"id\",",
+									"    \"name\",",
+									"    \"order\",",
+									"    \"indent\",",
+									"    \"comment_count\"",
+									"  ],",
+									"  \"properties\": {",
+									"    \"id\": {",
+									"      \"$id\": \"#/properties/id\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Id Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        2196100668",
+									"      ]",
+									"    },",
+									"    \"name\": {",
+									"      \"$id\": \"#/properties/name\",",
+									"      \"type\": \"string\",",
+									"      \"title\": \"The Name Schema\",",
+									"      \"default\": \"\",",
+									"      \"examples\": [",
+									"        \"Books to read\"",
+									"      ],",
+									"      \"pattern\": \"^(.*)$\"",
+									"    },",
+									"    \"order\": {",
+									"      \"$id\": \"#/properties/order\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Order Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        3",
+									"      ]",
+									"    },",
+									"    \"indent\": {",
+									"      \"$id\": \"#/properties/indent\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Indent Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        1",
+									"      ]",
+									"    },",
+									"    \"comment_count\": {",
+									"      \"$id\": \"#/properties/comment_count\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Comment_count Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        0",
+									"      ]",
+									"    }",
+									"  }",
+									"};",
+									"const currentProjectID = pm.environment.get('currentProjectID');",
+									"",
+									"describe('Get project endpoint', () => {",
+									"    it('reponse status should equal to 200 ', () => {",
+									"        response.status.should.equal(200);",
+									"    });",
+									"    ",
+									"    it('response body id should equal to request id: ' + currentProjectID, () => {",
+									"        response.body.id.should.equal(currentProjectID);",
+									"    });",
+									"   ",
+									"    it('the response body schema validation result should equal to true', () => {",
+									"        const result=tv4.validateResult(response.body, schema);",
+									"        result.valid.should.equal(true);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseUrl}}/projects/{{currentProjectID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects",
+								"{{currentProjectID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1be48671-6183-4f85-ade5-24a0a8f282f9",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Update project end point', () => {",
+									"    it('reponse status should equal to 204 ', () => {",
+									"        response.status.should.equal(204);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Books to read (changed)\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/projects/{{currentProjectID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects",
+								"{{currentProjectID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Get  Active Tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a222b6d5-10f7-4a94-ba57-5b21ccce0221",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"const schema =  {",
+									"  \"definitions\": {},",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+									"  \"$id\": \"http://example.com/root.json\",",
+									"  \"type\": \"array\",",
+									"  \"title\": \"The Root Schema\",",
+									"  \"items\": {",
+									"    \"$id\": \"#/items\",",
+									"    \"type\": \"object\",",
+									"    \"title\": \"The Items Schema\",",
+									"    \"required\": [",
+									"      \"id\",",
+									"      \"project_id\",",
+									"      \"content\",",
+									"      \"completed\",",
+									"      \"label_ids\",",
+									"      \"order\",",
+									"      \"indent\",",
+									"      \"priority\",",
+									"      \"comment_count\",",
+									"      \"url\"",
+									"    ],",
+									"    \"properties\": {",
+									"      \"id\": {",
+									"        \"$id\": \"#/items/properties/id\",",
+									"        \"type\": \"integer\",",
+									"        \"title\": \"The Id Schema\",",
+									"        \"default\": 0,",
+									"        \"examples\": [",
+									"          2824223607",
+									"        ]",
+									"      },",
+									"      \"project_id\": {",
+									"        \"$id\": \"#/items/properties/project_id\",",
+									"        \"type\": \"integer\",",
+									"        \"title\": \"The Project_id Schema\",",
+									"        \"default\": 0,",
+									"        \"examples\": [",
+									"          2195347367",
+									"        ]",
+									"      },",
+									"      \"content\": {",
+									"        \"$id\": \"#/items/properties/content\",",
+									"        \"type\": \"string\",",
+									"        \"title\": \"The Content Schema\",",
+									"        \"default\": \"\",",
+									"        \"examples\": [",
+									"          \"* Welcome to Todoist 👋 Let’s get you started with a few tips:\"",
+									"        ],",
+									"        \"pattern\": \"^(.*)$\"",
+									"      },",
+									"      \"completed\": {",
+									"        \"$id\": \"#/items/properties/completed\",",
+									"        \"type\": \"boolean\",",
+									"        \"title\": \"The Completed Schema\",",
+									"        \"default\": false,",
+									"        \"examples\": [",
+									"          false",
+									"        ]",
+									"      },",
+									"      \"label_ids\": {",
+									"        \"$id\": \"#/items/properties/label_ids\",",
+									"        \"type\": \"array\",",
+									"        \"title\": \"The Label_ids Schema\"",
+									"      },",
+									"      \"order\": {",
+									"        \"$id\": \"#/items/properties/order\",",
+									"        \"type\": \"integer\",",
+									"        \"title\": \"The Order Schema\",",
+									"        \"default\": 0,",
+									"        \"examples\": [",
+									"          1",
+									"        ]",
+									"      },",
+									"      \"indent\": {",
+									"        \"$id\": \"#/items/properties/indent\",",
+									"        \"type\": \"integer\",",
+									"        \"title\": \"The Indent Schema\",",
+									"        \"default\": 0,",
+									"        \"examples\": [",
+									"          1",
+									"        ]",
+									"      },",
+									"      \"priority\": {",
+									"        \"$id\": \"#/items/properties/priority\",",
+									"        \"type\": \"integer\",",
+									"        \"title\": \"The Priority Schema\",",
+									"        \"default\": 0,",
+									"        \"examples\": [",
+									"          1",
+									"        ]",
+									"      },",
+									"      \"comment_count\": {",
+									"        \"$id\": \"#/items/properties/comment_count\",",
+									"        \"type\": \"integer\",",
+									"        \"title\": \"The Comment_count Schema\",",
+									"        \"default\": 0,",
+									"        \"examples\": [",
+									"          0",
+									"        ]",
+									"      },",
+									"      \"url\": {",
+									"        \"$id\": \"#/items/properties/url\",",
+									"        \"type\": \"string\",",
+									"        \"title\": \"The Url Schema\",",
+									"        \"default\": \"\",",
+									"        \"examples\": [",
+									"          \"https://todoist.com/showTask?id=2824223607\"",
+									"        ],",
+									"        \"pattern\": \"(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]\\.[^\\s]{2,})\"",
+									"      }",
+									"    }",
+									"  }",
+									"};",
+									" ",
+									" describe('Get active Tasks endpoint', () => {",
+									"    it('reponse status should equal to 200 ', () => {",
+									"        response.status.should.equal(200);",
+									"    });",
+									" ",
+									"  ",
+									"    it('the response body schema validation result should equal to true', () => {",
+									"        const result=tv4.validateResult(response.body, schema);",
+									"        result.valid.should.equal(true);",
+									"    });",
+									"",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b8bbbd00-de88-4bf5-acbd-eb79e1193451",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"const schema = {",
+									"  \"definitions\": {},",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+									"  \"$id\": \"http://example.com/root.json\",",
+									"  \"type\": \"object\",",
+									"  \"title\": \"The Root Schema\",",
+									"  \"required\": [",
+									"    \"id\",",
+									"    \"project_id\",",
+									"    \"content\",",
+									"    \"completed\",",
+									"    \"label_ids\",",
+									"    \"order\",",
+									"    \"indent\",",
+									"    \"priority\",",
+									"    \"comment_count\"",
+									"  ],",
+									"  \"properties\": {",
+									"    \"id\": {",
+									"      \"$id\": \"#/properties/id\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Id Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        2839858794",
+									"      ]",
+									"    },",
+									"    \"project_id\": {",
+									"      \"$id\": \"#/properties/project_id\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Project_id Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        2196231553",
+									"      ]",
+									"    },",
+									"    \"content\": {",
+									"      \"$id\": \"#/properties/content\",",
+									"      \"type\": \"string\",",
+									"      \"title\": \"The Content Schema\",",
+									"      \"default\": \"\",",
+									"      \"examples\": [",
+									"        \"Appointment with Maria\"",
+									"      ],",
+									"      \"pattern\": \"^(.*)$\"",
+									"    },",
+									"    \"completed\": {",
+									"      \"$id\": \"#/properties/completed\",",
+									"      \"type\": \"boolean\",",
+									"      \"title\": \"The Completed Schema\",",
+									"      \"default\": false,",
+									"      \"examples\": [",
+									"        false",
+									"      ]",
+									"    },",
+									"    \"label_ids\": {",
+									"      \"$id\": \"#/properties/label_ids\",",
+									"      \"type\": \"array\",",
+									"      \"title\": \"The Label_ids Schema\"",
+									"    },",
+									"    \"order\": {",
+									"      \"$id\": \"#/properties/order\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Order Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        20",
+									"      ]",
+									"    },",
+									"    \"indent\": {",
+									"      \"$id\": \"#/properties/indent\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Indent Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        1",
+									"      ]",
+									"    },",
+									"    \"priority\": {",
+									"      \"$id\": \"#/properties/priority\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Priority Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        4",
+									"      ]",
+									"    },",
+									"    \"comment_count\": {",
+									"      \"$id\": \"#/properties/comment_count\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Comment_count Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        0",
+									"      ]",
+									"    }",
+									"  }",
+									"};",
+									"const requestData = JSON.parse(request.data);",
+									"",
+									"pm.environment.set('currentTaskID', response.body.id);",
+									"",
+									"describe('Get active Tasks endpoint', () => {",
+									"    it('reponse status should equal to 200 ', () => {",
+									"        response.status.should.equal(200);",
+									"    });",
+									" ",
+									"    it('reponse body id should be at least 1', () => {",
+									"        response.body.id.should.be.at.least(1);",
+									"    });",
+									"    ",
+									"    it('response body data should equal to data sent', () => {",
+									"        response.body.content.should.equal(requestData.content);",
+									"        response.body.completed.should.equal(requestData.completed);",
+									"        response.body.project_id.should.equal(requestData.project_id);",
+									"        response.body.order.should.equal(requestData.order);",
+									"    });",
+									"    ",
+									"    it('the response body schema validation result should equal to true', () => {",
+									"        const result=tv4.validateResult(response.body, schema);",
+									"        result.valid.should.equal(true);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completed\": false,\n    \"content\": \"Appointment with Maria\",\n    \"order\": 20,\n    \"priority\": 4,\n    \"project_id\": {{currentProjectID}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Task with invalid content",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fe7e9adb-129c-4ecc-9b5c-4edb82f4137f",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Create task with invalid data', () => {",
+									"    it('reponse status should equal to 400', () => {",
+									"        response.status.should.equal(400);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Empty content\"', () => {",
+									"        response.body.trim().should.equal('Empty content');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completedd\": false,\n    \"contentt\": \"Appointment with Maria\",\n    \"orderr\": 20,\n    \"priorityy\": 4,\n    \"project_idd\": {{currentProjectID}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e43dcfe-ad61-4801-a077-9776a00c36ce",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"const schema = {",
+									"  \"definitions\": {},",
+									"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+									"  \"$id\": \"http://example.com/root.json\",",
+									"  \"type\": \"object\",",
+									"  \"title\": \"The Root Schema\",",
+									"  \"required\": [",
+									"    \"id\",",
+									"    \"project_id\",",
+									"    \"content\",",
+									"    \"completed\",",
+									"    \"label_ids\",",
+									"    \"order\",",
+									"    \"indent\",",
+									"    \"priority\",",
+									"    \"comment_count\"",
+									"  ],",
+									"  \"properties\": {",
+									"    \"id\": {",
+									"      \"$id\": \"#/properties/id\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Id Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        2839858794",
+									"      ]",
+									"    },",
+									"    \"project_id\": {",
+									"      \"$id\": \"#/properties/project_id\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Project_id Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        2196231553",
+									"      ]",
+									"    },",
+									"    \"content\": {",
+									"      \"$id\": \"#/properties/content\",",
+									"      \"type\": \"string\",",
+									"      \"title\": \"The Content Schema\",",
+									"      \"default\": \"\",",
+									"      \"examples\": [",
+									"        \"Appointment with Maria\"",
+									"      ],",
+									"      \"pattern\": \"^(.*)$\"",
+									"    },",
+									"    \"completed\": {",
+									"      \"$id\": \"#/properties/completed\",",
+									"      \"type\": \"boolean\",",
+									"      \"title\": \"The Completed Schema\",",
+									"      \"default\": false,",
+									"      \"examples\": [",
+									"        false",
+									"      ]",
+									"    },",
+									"    \"label_ids\": {",
+									"      \"$id\": \"#/properties/label_ids\",",
+									"      \"type\": \"array\",",
+									"      \"title\": \"The Label_ids Schema\"",
+									"    },",
+									"    \"order\": {",
+									"      \"$id\": \"#/properties/order\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Order Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        20",
+									"      ]",
+									"    },",
+									"    \"indent\": {",
+									"      \"$id\": \"#/properties/indent\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Indent Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        1",
+									"      ]",
+									"    },",
+									"    \"priority\": {",
+									"      \"$id\": \"#/properties/priority\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Priority Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        4",
+									"      ]",
+									"    },",
+									"    \"comment_count\": {",
+									"      \"$id\": \"#/properties/comment_count\",",
+									"      \"type\": \"integer\",",
+									"      \"title\": \"The Comment_count Schema\",",
+									"      \"default\": 0,",
+									"      \"examples\": [",
+									"        0",
+									"      ]",
+									"    }",
+									"  }",
+									"};",
+									"",
+									"describe('Get task end point', () => {",
+									"    it('reponse status should equal to 200 ', () => {",
+									"        response.status.should.equal(200);",
+									"    });",
+									"    ",
+									"    it('the response body schema validation result should equal to true', () => {",
+									"        const result=tv4.validateResult(response.body, schema);",
+									"        result.valid.should.equal(true);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completed\": false,\n    \"content\": \"Appointment with Maria (changed)\",\n    \"order\": 20,\n    \"priority\": 4,\n    \"project_id\": {{currentProjectID}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTaskID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTaskID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f18186ec-1f6a-4287-b27c-5027962d04b5",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Update task end point', () => {",
+									"    it('reponse status should equal to 204 ', () => {",
+									"        response.status.should.equal(204);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completed\": false,\n    \"content\": \"Appointment with Maria (changed)\",\n    \"order\": 20,\n    \"priority\": 4,\n    \"project_id\": {{currentProjectID}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTaskID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTaskID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Task with invalid data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "00fb8a8f-c24b-4c37-a8a9-b1096be77ed9",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Update task with invalid data', () => {",
+									"    it('reponse status should equal to 400', () => {",
+									"        response.status.should.equal(400);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Empty content\"', () => {",
+									"        response.body.trim().should.equal('At least one of supported fields should be set and non-empty');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completedd\": false,\n    \"contentt\": \"Appointment with Maria\",\n    \"orderr\": 20,\n    \"priorityy\": 4,\n    \"project_idd\": {{currentProjectID}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTaskID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTaskID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Close Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "26f6752b-785a-4d02-8eb1-992ff282ae2e",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Close task end point', () => {",
+									"    it('reponse status should equal to 204 ', () => {",
+									"        response.status.should.equal(204);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTaskID}}/close",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTaskID}}",
+								"close"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reopen Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f29a8fa7-c5bd-49c2-bdd3-a6eed9efa77f",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Reopen task end point', () => {",
+									"    it('reponse status should equal to 204 ', () => {",
+									"        response.status.should.equal(204);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTaskID}}/reopen",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTaskID}}",
+								"reopen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4c5b2323-2bbc-4089-86eb-d5eb2807250a",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Delete task end point', () => {",
+									"    it('reponse status should equal to 204 ', () => {",
+									"        response.status.should.equal(204);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTaskID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTaskID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Removed Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "23014246-5527-45ed-9e6c-fcafa2f3074b",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Get removed task', () => {",
+									"    it('reponse status should equal to 404', () => {",
+									"        response.status.should.equal(404);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Not Found\"', () => {",
+									"        response.body.trim().should.equal('Not Found');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completed\": false,\n    \"content\": \"Appointment with Maria (changed)\",\n    \"order\": 20,\n    \"priority\": 4,\n    \"project_id\": {{currentProjectID}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTaskID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTaskID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Removed Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eedffd2a-7f31-4383-9c68-27b3d2081250",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Update removed task', () => {",
+									"    it('reponse status should equal to 400', () => {",
+									"        response.status.should.equal(400);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Item not found\"', () => {",
+									"        response.body.trim().should.equal('Item not found');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completed\": false,\n    \"content\": \"Appointment with Maria (changed)\",\n    \"order\": 20,\n    \"priority\": 4,\n    \"project_id\": {{currentProjectID}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTaskID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTaskID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reopen Removed Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "249f2c55-db9c-4fae-a5bc-6aff3b083516",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Reopen removed task', () => {",
+									"    it('reponse status should equal to 400 ', () => {",
+									"        response.status.should.equal(400);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Item not found\"', () => {",
+									"        response.body.trim().should.equal('Item not found');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{currentTaskID}}/reopen",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{currentTaskID}}",
+								"reopen"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "End Tests",
+			"item": [
+				{
+					"name": "Delete Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "27e725f2-a942-4a1c-a446-06ca63b92e55",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Delete project end point', () => {",
+									"    it('reponse status should equal to 204 ', () => {",
+									"        response.status.should.equal(204);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseUrl}}/projects/{{currentProjectID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects",
+								"{{currentProjectID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  Removed Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5e183104-a2ea-4cb1-b4f4-fa04ea08b41d",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"const currentProjectID = pm.environment.get('currentProjectID');",
+									"",
+									"describe('Get removed project (id: ' + currentProjectID + ')', () => {",
+									"    it('reponse status should equal to 404 ', () => {",
+									"        response.status.should.equal(404);",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseUrl}}/projects/{{currentProjectID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects",
+								"{{currentProjectID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Removed Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b74558c6-646b-45dc-a96a-c6314bce33db",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"const currentProjectID = pm.environment.get('currentProjectID');",
+									"",
+									"describe('Update removed project (id: ' + currentProjectID + ')', () => {",
+									"    it('reponse status should equal to 400 ', () => {",
+									"        response.status.should.equal(400);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Project not found\"', () => {",
+									"        response.body.trim().should.equal('Project not found');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Books to read (changed)\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/projects/{{currentProjectID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"projects",
+								"{{currentProjectID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Task in Removed Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "424ea39b-cd2f-4f34-8609-6bd1d9c03153",
+								"type": "text/javascript",
+								"exec": [
+									"eval(pm.environment.get('postmanBDD'));",
+									"",
+									"describe('Create task with invalid data', () => {",
+									"    it('reponse status should equal to 400', () => {",
+									"        response.status.should.equal(400);",
+									"    });",
+									"    ",
+									"    it('reponse text should equal to \"Project not found\"', () => {",
+									"        response.body.trim().should.equal('Project not found');",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completed\": false,\n    \"content\": \"Appointment with Maria\",\n    \"order\": 20,\n    \"priority\": 4,\n    \"project_id\": {{currentProjectID}}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a33bd1cd-5be6-4a2b-b020-ca633f618e77",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b6777ccd-83ae-4ee0-8cb0-cfad30634bea",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3344024a-4335-48a4-9bec-3b3d0014a60d",
+				"type": "text/javascript",
+				"exec": [
+					"pm.environment.set('startRequest', new Date());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "7f631bff-999e-4da6-bf63-63df06ccf95f",
+				"type": "text/javascript",
+				"exec": [
+					"eval(pm.environment.get('postmanBDD'));",
+					"",
+					"const startRequest = new Date(pm.environment.get('startRequest'));",
+					"const endRequest = new Date();",
+					"",
+					"console.log(startRequest, 'start');",
+					"console.log(endRequest, 'end');",
+					"",
+					"const timeElapsed = endRequest.getTime() - startRequest.getTime();",
+					"",
+					"describe('Request time validation', () => {",
+					"    it('reponse time should be at below 750 ms', () => {",
+					"        timeElapsed.should.be.at.below(750);",
+					"    });",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "4736ef95-862c-4fc7-86b4-249c7f98d324",
+			"key": "baseUrl",
+			"value": "https://todoist.com/API/v8",
+			"type": "string"
+		},
+		{
+			"id": "322d6c97-8cca-4231-9c8e-235468861fc7",
+			"key": "postmanBDD",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
