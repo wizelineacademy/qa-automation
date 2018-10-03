@@ -1,0 +1,586 @@
+{
+	"info": {
+		"_postman_id": "0c1efdc0-87ba-45c6-8991-8dc4e82b9016",
+		"name": "QA Academy Backend Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Projects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2036acf2-09b9-47d7-b241-d0b60d9a5644",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"//pm.environment.set('projectId', response.body.id);",
+							"//pm.environment.set('projectName', response.body.name);",
+							"",
+							"describe('Get All Projects', ()=> {",
+							"    it ('Validate OK response', ()=>{",
+							"        response.should.have.status(200);",
+							"    });",
+							"    ",
+							"    it ('Validate No Empty response', ()=>{",
+							"        let jsonResponse = pm.response.json();",
+							"        expect(jsonResponse).to.be.an('array').that.is.not.empty;",
+							"    })",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/projects",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get A Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "87f844b3-2b88-4b5b-8b15-a509ccd37262",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Get A Project', ()=> {",
+							"    it ('Validate ID Project response', ()=>{",
+							"        let jsonResponse = pm.response.json();",
+							"        expect(jsonResponse).to.have.property(\"id\");",
+							"        expect(jsonResponse.id).to.equal(2195996960);",
+							"    });",
+							"    ",
+							"    ",
+							"    it ('Validate Response Squema', ()=>{",
+							"        let jsonResponse = pm.response.json();",
+							"        expect(jsonResponse.name).to.be.a('string');",
+							"        expect(jsonResponse.id).to.be.a('number');",
+							"        expect(jsonResponse.order).to.be.a('number');",
+							"        expect(jsonResponse.indent).to.be.a('number');",
+							"        expect(jsonResponse.comment_count).to.be.a('number');",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/projects/2195996960",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"2195996960"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create A New Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b25fcba7-f94f-4dc9-aba2-3c207d224ec3",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Create A New Project', ()=> {",
+							"    it ('Validate Successful Creation', ()=>{",
+							"        let jsonResponse = pm.response.json();",
+							"        expect(jsonResponse.name).to.equal(\"Ventas\");",
+							"        expect(jsonResponse.id).to.be.above(0);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Ventas\"}"
+				},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/projects",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update A Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7792720f-050f-4517-a005-62b59c09f11f",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Update A Project', ()=> {",
+							"    it ('Validate No Content response', ()=>{",
+							"        response.should.have.status(204);",
+							"    });",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Aclaraciones\"}"
+				},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/projects/2195996960",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"2195996960"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete A Project",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/projects/2195988144",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"2195988144"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Active Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7bbf17b-907e-4f6d-9b9a-76b76e71cca5",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Get Active Task', ()=> {",
+							"    it ('Validate OK response', ()=>{",
+							"        response.should.have.status(200);",
+							"    });",
+							"    ",
+							"    it ('Validate No Empty Response', ()=>{",
+							"        let jsonResponse = pm.response.json();",
+							"        expect(jsonResponse).to.be.an('array').that.is.not.empty;",
+							"    })",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/tasks",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create A New Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "372ef098-fba0-4d03-b916-4a085ab882c5",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Create A New Task', ()=> {",
+							"    it ('Validate Successful Creation', ()=>{",
+							"        let jsonResponse = pm.response.json();",
+							"        expect(jsonResponse.content).to.equal(\"Appointment with Dentist\");",
+							"        expect(jsonResponse.project_id).to.equal(2195988143);",
+							"    });",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"content\": \"Appointment with Dentist\", \"due_string\": \"tomorrow at 14:30\", \"due_lang\": \"en\", \"priority\": 4, \"project_id\": 2195988143}"
+				},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/tasks",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea16d1be-32d8-41ac-9901-5743af8c7421",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Get A Task', ()=> {",
+							"    it ('Validate Project ID response', ()=>{",
+							"        let jsonResponse = pm.response.json();",
+							"        expect(jsonResponse).to.have.property(\"id\");",
+							"        expect(jsonResponse.id).to.equal(2839674073);",
+							"    });",
+							"    ",
+							"    ",
+							"    it ('Validate Task Response Squema', ()=>{",
+							"        let jsonResponse = pm.response.json();",
+							"        expect(jsonResponse.id).to.be.a('number');",
+							"        expect(jsonResponse.project_id).to.be.a('number');",
+							"        expect(jsonResponse.content).to.be.a('string');",
+							"        expect(jsonResponse.completed).to.equal(false);",
+							"        expect(jsonResponse.label_ids).to.be.an('array');",
+							"        expect(jsonResponse.order).to.be.a('number');",
+							"        expect(jsonResponse.indent).to.be.a('number');",
+							"        expect(jsonResponse.priority).to.be.a('number');",
+							"        expect(jsonResponse.comment_count).to.be.a('number');",
+							"     });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/tasks/2839674073",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"2839674073"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5757c821-cb81-4d5d-8b53-08a298bcf7f5",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Update A Task', ()=> {",
+							"    it ('Validate No Content response', ()=>{",
+							"        response.should.have.status(204);",
+							"    });",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"content\": \"Concert at the theater\"}"
+				},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/tasks/2839728770",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"2839728770"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Close A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d9dc45a-a7ba-4148-9bb8-fe4afbff331b",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Close A Task', ()=> {",
+							"    it ('Validate No Content response', ()=>{",
+							"        response.should.have.status(204);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/tasks/2839728770/close",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"2839728770",
+						"close"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reopen A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b4147d8-4e6e-40b5-a082-264a0a6a0ae5",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Reopen A Task', ()=> {",
+							"    it ('Validate No Content response', ()=>{",
+							"        response.should.have.status(204);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/tasks/2839728770/reopen",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"2839728770",
+						"reopen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9aba72ff-da90-40d5-a574-b3afb3653a3a",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe('Delete A Task', ()=> {",
+							"    it ('Validate No Content response', ()=>{",
+							"        response.should.have.status(204);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://beta.todoist.com/API/v8/tasks/2839728770",
+					"protocol": "https",
+					"host": [
+						"beta",
+						"todoist",
+						"com"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"2839728770"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	}
+}
