@@ -1,0 +1,1072 @@
+{
+	"info": {
+		"name": "QaAutomation",
+		"_postman_id": "198318ca-29bf-498b-b5a8-5845df5a8887",
+		"description": "Scripts for backend testing in Wizeline QA Certification Course",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Projects",
+			"description": "",
+			"item": [
+				{
+					"name": "Install Postman BDD",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "694f7743-5d06-4f5d-938a-1a0086835461",
+								"type": "text/javascript",
+								"exec": [
+									"postman.setGlobalVariable('postmanBDD', responseBody);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js",
+							"protocol": "http",
+							"host": [
+								"bigstickcarpet",
+								"com"
+							],
+							"path": [
+								"postman-bdd",
+								"dist",
+								"postman-bdd.min.js"
+							]
+						},
+						"description": "GET request to retrieve postman bdd"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All projects",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "152ccaf4-f466-4723-b5f4-022e4304c27b",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"//pm.environment.set(\"projectId\", response.body.id);",
+									"pm.environment.set(\"name\", response.body.name);",
+									"",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									"",
+									"describe(\"Validate Project Data\", () => {",
+									"    ",
+									"    it(\"should have the correct state name\", () => {",
+									"//        pm.expect(pm.environment.get(\"name\")).to.equals(\"Zapopans\");",
+									"        expect(pm.environment.get(\"name\"))===(\"Inbox\");",
+									"    });",
+									"    ",
+									"    it(\"should be a 200 response\", () => {",
+									"        expect(pm.response.to.have.status(200));",
+									"    });",
+									"    ",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/projects",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"projects"
+							]
+						},
+						"description": "GET request to get all projects"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a New Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c3899b8d-4c1b-4d4a-88a0-7b18d6f0afa9",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.environment.set(\"projectId\", response.body.id);",
+									"pm.globals.set(\"projectName\", response.body.name);",
+									"",
+									" it(\"should be a 200 response\", () => {",
+									"        expect(pm.response.to.have.status(200));",
+									"    });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Torreon\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}API/v8/projects",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"projects"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get a project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "552dbea9-2e41-4715-9e21-6d54e1315e57",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									"pm.environment.set(\"name\", response.body.name);",
+									"",
+									"describe(\"Validate Project Data\", () => {",
+									"    ",
+									"    it(\"should have the correct state name\", () => {",
+									"        pm.expect(pm.environment.get(\"name\")).to.equals(\"Torreon\");",
+									"    });",
+									"    ",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"projects",
+								"{{projectId}}"
+							]
+						},
+						"description": "GET to get an existent project"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "830f0bf0-6c39-4a24-a5b1-bb0392d73237",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									" it(\"should be a 204 response\", () => {",
+									"        expect(pm.response.to.have.status(204));",
+									"    });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Nuevo Leon\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"projects",
+								"{{projectId}}"
+							]
+						},
+						"description": "Post request to update an existent project"
+					},
+					"response": []
+				},
+				{
+					"name": "Get updated Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c5a37ef3-dad2-4281-a7fe-6c48088eee6c",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									"pm.environment.set(\"name\", response.body.name);",
+									"",
+									"describe(\"Validate Project Data\", () => {",
+									"    ",
+									"    it(\"should have the name updated\", () => {",
+									"        pm.expect(pm.environment.get(\"name\")).to.equals(\"Nuevo Leon\");",
+									"    });",
+									"    ",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"projects",
+								"{{projectId}}"
+							]
+						},
+						"description": "GET to get an existent project"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc388d7a-efa2-4d7c-9e70-fecb1258118d",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									" it(\"should be a 204 response\", () => {",
+									"        expect(pm.response.to.have.status(204));",
+									"    });"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"projects",
+								"{{projectId}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Project Detected",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "edb800f8-e48b-4600-a9ad-fff7373afdf5",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.test(\"Project is not longer available\", () => {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"projects",
+								"{{projectId}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"description": null,
+			"item": [
+				{
+					"name": "Install Postman BDD Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "694f7743-5d06-4f5d-938a-1a0086835461",
+								"type": "text/javascript",
+								"exec": [
+									"postman.setGlobalVariable('postmanBDD', responseBody);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js",
+							"protocol": "http",
+							"host": [
+								"bigstickcarpet",
+								"com"
+							],
+							"path": [
+								"postman-bdd",
+								"dist",
+								"postman-bdd.min.js"
+							]
+						},
+						"description": "GET request to retrieve postman bdd"
+					},
+					"response": []
+				},
+				{
+					"name": "Get active Tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3bd7ce32-0fbb-4b69-bdf7-50f8896505d0",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"//pm.environment.set(\"projectId\", response.body.id);",
+									"pm.environment.set(\"content\", response.body.content);",
+									"",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									"",
+									"describe(\"Validate Task Data\", () => {",
+									"    ",
+									"    it(\"should have the correct content\", () => {",
+									"//        pm.expect(pm.environment.get(\"name\")).to.equals(\"Zapopans\");",
+									"        expect(pm.environment.get(\"content\"))===(\"Update task\");",
+									"    });",
+									"    ",
+									"    it(\"should be a 200 response\", () => {",
+									"        expect(pm.response.to.have.status(200));",
+									"    });",
+									"    ",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/tasks?project_id=2195397904",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "2195397904",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create a New Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "14943935-fb77-4730-86dc-9cc4a9c03cac",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.environment.set(\"taskID\", response.body.id);",
+									"pm.globals.set(\"taskName\", response.body.name);",
+									"",
+									" it(\"should be a 200 response\", () => {",
+									"        expect(pm.response.to.have.status(200));",
+									"    });"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"content\": \"Appointment with Vicky\",\r\n        \"due_string\": \"tomorrow at 12:30\",\r\n        \"due_lang\": \"en\",\r\n        \"priority\": 4\r\n    }"
+						},
+						"url": {
+							"raw": "{{baseURL}}API/v8/tasks",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"tasks"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f1caa61-1e76-4fb7-aace-203707d7d704",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									"pm.environment.set(\"content\", response.body.content);",
+									"",
+									"describe(\"Validate Project Data\", () => {",
+									"    ",
+									"    it(\"should have the correct content\", () => {",
+									"        pm.expect(pm.environment.get(\"content\")).to.equals(\"Appointment with Vicky\");",
+									"    });",
+									"    ",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/tasks/{{taskID}}",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"tasks",
+								"{{taskID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc819473-b3d6-4edb-9212-f728603d0089",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									" it(\"should be a 204 response\", () => {",
+									"        expect(pm.response.to.have.status(204));",
+									"    });"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"content\": \"Cita con mi esposa\",\r\n        \"due_string\": \"today at 12:30\",\r\n        \"due_lang\": \"en\",\r\n        \"priority\": 4\r\n    }"
+						},
+						"url": {
+							"raw": "{{baseURL}}API/v8/tasks/{{taskID}}",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"tasks",
+								"{{taskID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Updated Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2705b52-bb6f-437d-a6d7-2933de2ae494",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									"pm.environment.set(\"content\", response.body.content);",
+									"",
+									"describe(\"Validate Project Data\", () => {",
+									"    ",
+									"    it(\"should have the updated content\", () => {",
+									"        pm.expect(pm.environment.get(\"content\")).to.equals(\"Cita con mi esposa\");",
+									"    });",
+									"    ",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/tasks/{{taskID}}",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"tasks",
+								"{{taskID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Close a Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1c5c4772-65e7-454f-872c-d9f731a892d1",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									" it(\"should be a 204 response\", () => {",
+									"        expect(pm.response.to.have.status(204));",
+									"    });"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}/API/v8/tasks/{{taskID}}/close",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"API",
+								"v8",
+								"tasks",
+								"{{taskID}}",
+								"close"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Closed Task not visible",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8be15745-a274-4fa9-ac91-098f882c4a38",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}/API/v8/tasks/{{taskID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"API",
+								"v8",
+								"tasks",
+								"{{taskID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Reopen a Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "206a0cfe-f71a-4762-b9d7-6f7ea405b7a9",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									" it(\"should be a 204 response\", () => {",
+									"        expect(pm.response.to.have.status(204));",
+									"    });"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/tasks/{{taskID}}/reopen",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"tasks",
+								"{{taskID}}",
+								"reopen"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Reopened Task visible",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2705b52-bb6f-437d-a6d7-2933de2ae494",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									"pm.environment.set(\"content\", response.body.content);",
+									"",
+									"describe(\"Validate Project Data\", () => {",
+									"    ",
+									"    it(\"should have the updated content\", () => {",
+									"        pm.expect(pm.environment.get(\"content\")).to.equals(\"Cita con mi esposa\");",
+									"    });",
+									"    ",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}/API/v8/tasks/{{taskID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"API",
+								"v8",
+								"tasks",
+								"{{taskID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64c992dc-6ffa-4e95-8788-6e5d5fbb990b",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									" it(\"should be a 204 response\", () => {",
+									"        expect(pm.response.to.have.status(204));",
+									"    });"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}API/v8/tasks/{{taskID}}",
+							"host": [
+								"{{baseURL}}API"
+							],
+							"path": [
+								"v8",
+								"tasks",
+								"{{taskID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Deleted task not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "70a9b5e8-6d3a-445b-8104-1d64ce44f928",
+								"type": "text/javascript",
+								"exec": [
+									"eval(globals.postmanBDD);",
+									"",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Connection header is displayed\", () =>{",
+									"    pm.response.to.have.header(\"Connection\");",
+									"});",
+									"",
+									"pm.environment.set(\"content\", response.body.content);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{baseURL}}/API/v8/tasks/{{taskID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"API",
+								"v8",
+								"tasks",
+								"{{taskID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
