@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Performance tests with Isma Todois token') {
             steps {
-
+                
                 withEnv(['JMETER_HOME=apache-jmeter-5.0/bin']) {
                     sh '$JMETER_HOME/jmeter -n -t api_tests.jmx -l results-isma.jtl'
                 }
@@ -63,16 +63,13 @@ pipeline {
         }
         stage('qa-task1-test-protractor') {
             steps {
-                withNPM(npmrcConfig: 'my-custom-nprc') {
-                    sh 'npm install -g protractor'
-                }       
+                sh 'protractor qa-task1-ismael-andrade/confs/conf.js'
             }
         }
-        stage('qa-task2-test-newman') {
+                stage('qa-task2-test-newman') {
             steps {
                 sh 'newman run qa-task2-ismael-andrade/qa-task2-ismael-andrade.postman_collection.json  -e qa-task2-ismael-andrade/todoist.postman_environment.json -g qa-task2-ismael-andrade/BDDGlobal.json'
             }
-
         }
     }
 }
