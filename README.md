@@ -47,9 +47,7 @@ pipeline {
         }
         stage('qa-task1-test-protractor') {
             steps {
-                withNPM(npmrcConfig: 'my-custom-nprc') {
-                    sh 'npm install -g protractor'
-                }       
+                sh 'protractor qa-task1-ismael-andrade/confs/conf.js'
             }
         }
         stage('qa-task2-test-newman') {
