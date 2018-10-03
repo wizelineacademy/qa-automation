@@ -1,0 +1,16 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1538529084092,927,Projects GET,200,OK,Thread Group 1-5,text,true,,913,231,5,5,https://beta.todoist.com/API/v8/projects,927,0,565
+1538529083893,1133,Projects GET,200,OK,Thread Group 1-4,text,true,,913,231,5,5,https://beta.todoist.com/API/v8/projects,1133,0,788
+1538529085026,235,Tasks GET,200,OK,Thread Group 1-4,text,true,,3384,228,5,5,https://beta.todoist.com/API/v8/tasks,233,0,0
+1538529085022,296,Tasks GET,200,OK,Thread Group 1-5,text,true,,3384,228,5,5,https://beta.todoist.com/API/v8/tasks,295,0,0
+1538529085262,277,Tasks POST,400,Bad Request,Thread Group 1-4,text,false,,375,646,5,5,https://beta.todoist.com/API/v8/tasks,277,0,0
+1538529085318,232,Tasks POST,400,Bad Request,Thread Group 1-5,text,false,,375,646,4,4,https://beta.todoist.com/API/v8/tasks,232,0,0
+1538529083607,2571,Projects GET,200,OK,Thread Group 1-1,text,true,,913,231,3,3,https://beta.todoist.com/API/v8/projects,2571,0,2357
+1538529083695,2779,Projects GET,200,OK,Thread Group 1-3,text,true,,913,231,3,3,https://beta.todoist.com/API/v8/projects,2779,0,2203
+1538529086475,595,Tasks GET,200,OK,Thread Group 1-3,text,true,,3384,228,3,3,https://beta.todoist.com/API/v8/tasks,595,0,366
+1538529087071,221,Tasks POST,400,Bad Request,Thread Group 1-3,text,false,,375,646,3,3,https://beta.todoist.com/API/v8/tasks,221,0,0
+1538529086179,1581,Tasks GET,200,OK,Thread Group 1-1,text,true,,3384,228,2,2,https://beta.todoist.com/API/v8/tasks,1581,0,1357
+1538529087761,600,Tasks POST,400,Bad Request,Thread Group 1-1,text,false,,375,646,2,2,https://beta.todoist.com/API/v8/tasks,600,0,0
+1538529083605,4771,Projects GET,200,OK,Thread Group 1-2,text,true,,913,231,1,1,https://beta.todoist.com/API/v8/projects,4771,0,4019
+1538529088376,572,Tasks GET,200,OK,Thread Group 1-2,text,true,,3384,228,1,1,https://beta.todoist.com/API/v8/tasks,572,0,360
+1538529088949,240,Tasks POST,400,Bad Request,Thread Group 1-2,text,false,,375,646,1,1,https://beta.todoist.com/API/v8/tasks,240,0,0

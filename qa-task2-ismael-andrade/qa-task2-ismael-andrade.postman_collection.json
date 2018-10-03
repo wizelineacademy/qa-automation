@@ -1,0 +1,918 @@
+{
+	"info": {
+		"_postman_id": "a60548b9-203f-483f-a218-a8bbdd816930",
+		"name": "qa-task2-ismael-andrade",
+		"description": "Task2 solution by Ismael andrade - todoist project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all projects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5d85b031-1f42-4151-940e-54f7b58b01b4",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Tests for Getting all projects\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatus));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  it('Response must be json', () => { ",
+							"      ",
+							"      expect(response.should.be.json);",
+							"      ",
+							"  });",
+							"  ",
+							"  it('Response should not be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.not.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  it('should match the JSON schema', () => {",
+							"  ",
+							"     expect(tv4.validate(response.body, environment.allprojectsschema)).to.be.true;",
+							"    ",
+							"    });",
+							"  ",
+							"});//termina describe",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/projects",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73d90d1e-1d5f-4b32-9ae4-34cbcca4d9a3",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"pm.environment.set(\"projectId\",response.body.id);",
+							"pm.environment.set(\"name\",response.body.name);",
+							"",
+							"",
+							"describe (\"Create a New task\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatus));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  it('Response must be json', () => { ",
+							"      ",
+							"      expect(response.should.be.json);",
+							"      ",
+							"  });",
+							"  ",
+							"  it('Response should not be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.not.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  it('should match the JSON schema', () => {",
+							"  ",
+							"     expect(tv4.validate(response.body, environment.createprojectschema)).to.be.true;",
+							"    ",
+							"    });",
+							"  ",
+							"});//termina describe",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"{{name}}\"\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/projects",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5c2b3456-1a96-4244-b4df-f47af2df4ee6",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Tests for Getting a project with id\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatus));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  it('Response must be json', () => { ",
+							"      ",
+							"      expect(response.should.be.json);",
+							"      ",
+							"  });",
+							"  ",
+							"  it('Response should not be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.not.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  it('should match the JSON schema', () => {",
+							"  ",
+							"     expect(tv4.validate(response.body, environment.getaprojectschema)).to.be.true;",
+							"    ",
+							"    });",
+							"  ",
+							"});//termina describe"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ec54501-cd76-4cfd-9af7-d9efea1ecba8",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe (\"Tests for Updating a Project\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatusUpdate));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  ",
+							"  it('Response should  be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"",
+							"});//termina describe"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"{{newName}}\"}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "494af524-faa6-4827-badf-fe836ea8ff67",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe (\"Tests for Updating a Project\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatusUpdate));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  ",
+							"  it('Response should  be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"",
+							"  ",
+							"});//termina describe"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Active Tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d29bb6e-8db6-4b86-8c45-195890658314",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Tests for Getting all active tasks\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatus));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  it('Response must be json', () => { ",
+							"      ",
+							"      expect(response.should.be.json);",
+							"      ",
+							"  });",
+							"  ",
+							"  it('Response should not be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.not.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  it('should match the JSON schema', () => {",
+							"  ",
+							"     expect(tv4.validate(response.body, environment.getActiveTasksSchema)).to.be.true;",
+							"    ",
+							"    });",
+							"  ",
+							"});//termina describe",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/tasks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d48b612f-3902-44f6-b93f-306e0f8fcbee",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Tests for creating new task\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatus));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  it('Response must be json', () => { ",
+							"      ",
+							"      expect(response.should.be.json);",
+							"      ",
+							"  });",
+							"  ",
+							"  it('Response should not be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.not.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  it('should match the JSON schema', () => {",
+							"  ",
+							"     expect(tv4.validate(response.body, environment.createTaskSchema)).to.be.true;",
+							"    ",
+							"    });",
+							"  ",
+							"});//termina describe",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"content\": \"{{taskContent}}\", \"due_lang\": \"{{dueLang}}\", \"priority\": 1}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/tasks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Task by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ab10479-4fc3-484e-8bec-2b22f1f150da",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Tests for Getting a task by id\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatus));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  it('Response must be json', () => { ",
+							"      ",
+							"      expect(response.should.be.json);",
+							"      ",
+							"  });",
+							"  ",
+							"  it('Response should not be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.not.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  it('should match the JSON schema', () => {",
+							"  ",
+							"     expect(tv4.validate(response.body, environment.getTaskSchema)).to.be.true;",
+							"    ",
+							"    });",
+							"  ",
+							"});//termina describe",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/tasks/{{idTask}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{idTask}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "053c74f5-cb39-44b4-bd5b-9a4b46200571",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Tests for updating a task\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatusUpdate));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  ",
+							"  it('Response should  be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  ",
+							"});//termina describe"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"content\": \"{{newContent}}\"}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/tasks/{{idTask}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{idTask}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Close a task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fab11263-b0cb-4b0c-918d-03297fb736f5",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Tests for closing a task\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatusUpdate));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  ",
+							"  it('Response should  be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  ",
+							"});//termina describe"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/tasks/{{idTask}}/close",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{idTask}}",
+						"close"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reopen a task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6472dc7-aae2-4f3d-a412-e5c531fe93e4",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Tests for reopen a task\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatusUpdate));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  ",
+							"  it('Response should  be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  ",
+							"});//termina describe"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/tasks/{{idTask}}/reopen",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{idTask}}",
+						"reopen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4666897f-a271-40ef-8a0b-ab3f382e5337",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Tests for deleting a task\" , () => {",
+							"    ",
+							" ",
+							"   it (\"Success Status code validation \", () => {",
+							"      ",
+							"      expect(response.status).to.equals(Number(environment.successStatusUpdate));",
+							"  });",
+							"     ",
+							"     it (\"Response time less than Max Reponse Time \", () => {",
+							"      ",
+							"      ",
+							"      expect(pm.response.responseTime).to.be.below(Number(environment.maxResponseTime));",
+							"  });",
+							"  ",
+							"  ",
+							"  it('Response should  be empty', () => { ",
+							"      ",
+							"      expect(response.body.should.be.empty);",
+							"  });",
+							"  ",
+							"  ",
+							"  ",
+							"});//termina describe"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseUrl}}/API/v8/tasks/{{idTask}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{idTask}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	}
+}

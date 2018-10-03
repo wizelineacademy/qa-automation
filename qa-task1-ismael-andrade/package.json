@@ -1,0 +1,32 @@
+{
+  "name": "qaworkshop",
+  "version": "1.0.0",
+  "description": "repository created for the QA Automation certification",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wizelineacademy/qa-automation.git"
+  },
+  "keywords": [
+    "QA",
+    "Automation",
+    "Certification"
+  ],
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/wizelineacademy/QAWorkshop/issues"
+  },
+  "homepage": "https://github.com/wizelineacademy/qa-automation#readme",
+  "dependencies": {
+    "node-env-file": "^0.1.8",
+    "protractor": "^5.4.1",
+    "webdriver-manager": "^12.0.6"
+  }
+}
