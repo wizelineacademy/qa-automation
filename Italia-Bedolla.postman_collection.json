@@ -1,0 +1,1357 @@
+{
+	"info": {
+		"_postman_id": "ad8bb59a-1bba-44a0-8718-d7fdbdcccb92",
+		"name": "QA-WZ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "InstallPostman BDD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ed607c83-08b8-4d90-bece-cadc35abb581",
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable('postmanBDD', responseBody);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js",
+					"protocol": "http",
+					"host": [
+						"bigstickcarpet",
+						"com"
+					],
+					"path": [
+						"postman-bdd",
+						"dist",
+						"postman-bdd.min.js"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "63fae7de-4521-4506-8c92-fe10977d7f85",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"pm.environment.set(\"projectId\", response.body.id);",
+							"pm.globals.set(\"projectName\", response.body.name);",
+							"project_name = \"New-Project\";",
+							"newProjectResponse = JSON.parse(responseBody);",
+							"/*newProjectSchema = {",
+							"    \"required\": [\"id\",\"name\",\"order\",\"indent\",\"comment_count\"],",
+							"    \"properties\": {",
+							"            \"id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"name\": {",
+							"                \"type\": \"string\",",
+							"            },",
+							"            \"order\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"indent\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"comment_count\": {",
+							"                \"type\": \"integer\",",
+							"            }",
+							"        }",
+							"}",
+							"*/",
+							"//console.log(pm.globals.get(\"projectName\"));",
+							"",
+							"describe(\"Validate Project Data\",() =>{",
+							"    ",
+							"    it('Validate JSON schema response', () => {",
+							"        response.should.be.json;",
+							"    })",
+							"    ",
+							"    it('Validate content JSON schema response', () => {",
+							"//        expect(tv4.validate(newProjectResponse,newProjectSchema)).to.be.true;",
+							"        expect(tv4.validate(newProjectResponse,pm.environment.get(\"newProjectSchema\"))).to.be.true;",
+							"    })",
+							"    ",
+							"    it(\"Validate Response Time below 1000\", () =>{",
+							"        expect(responseTime).to.be.below(1000);",
+							"    })",
+							"    ",
+							"    it(\"Validate 200 response\", () =>{",
+							"        expect(response.status).to.equals(200);",
+							"    })",
+							"    ",
+							"    it(\"Validate Project Name\", () =>{",
+							"        //pm.expect(pm.globals.get(\"projectName\")).to.equals(\"Proyecto-0017\");",
+							"        expect(pm.globals.get(\"projectName\")).to.equals(project_name);",
+							"        //expect(pm.globals.get(\"projectName\")).to.equals(\"Proyecto-0017\");",
+							"    })",
+							"})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"New-Project\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Projects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "87b8220f-b8fd-436e-8626-96c1295496db",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"newProjectResponse = JSON.parse(responseBody);",
+							"project_name = response.body[1].name;",
+							"newProjectSchema = {",
+							"    \"required\": [\"id\",\"name\",\"order\",\"indent\",\"comment_count\"],",
+							"    \"properties\": {",
+							"            \"id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"name\": {",
+							"                \"type\": \"string\",",
+							"            },",
+							"            \"order\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"indent\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"comment_count\": {",
+							"                \"type\": \"integer\",",
+							"            }",
+							"        }",
+							"}",
+							"",
+							"console.log(project_name);",
+							"",
+							"describe(\"Validate Project Data\",() =>{",
+							"    ",
+							"    it('Validate JSON schema response', () => {",
+							"        response.should.be.json;",
+							"    })",
+							"    ",
+							"    it('Validate content JSON schema response', () => {",
+							"        expect(tv4.validate(newProjectResponse,newProjectSchema)).to.be.true;",
+							"    })",
+							"    ",
+							"    it(\"Validate Response Time below 1000\", () =>{",
+							"        expect(responseTime).to.be.below(1000);",
+							"    })",
+							"    ",
+							"    it(\"Validate 200 response\", () =>{",
+							"        expect(response.status).to.equals(200);",
+							"    })",
+							"    ",
+							"    it(\"Validate Project Name\", () =>{",
+							"        //pm.expect(pm.globals.get(\"projectName\")).to.equals(\"Proyecto-0017\");",
+							"        expect(pm.globals.get(\"projectName\")).to.equals(project_name);",
+							"        //expect(pm.globals.get(\"projectName\")).to.equals(\"Proyecto-0017\");",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Peliculas!!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get A Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4b923732-7355-45ab-a95f-3d9baba297e5",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"newProjectResponse = JSON.parse(responseBody);",
+							"project_name = response.body.name;",
+							"newProjectSchema = {",
+							"    \"required\": [\"id\",\"name\",\"order\",\"indent\",\"comment_count\"],",
+							"    \"properties\": {",
+							"            \"id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"name\": {",
+							"                \"type\": \"string\",",
+							"            },",
+							"            \"order\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"indent\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"comment_count\": {",
+							"                \"type\": \"integer\",",
+							"            }",
+							"        }",
+							"}",
+							"",
+							"console.log(project_name);",
+							"",
+							"describe(\"Validate Project Data\",() =>{",
+							"    ",
+							"    it('Validate JSON schema response', () => {",
+							"        response.should.be.json;",
+							"    })",
+							"    ",
+							"    it('Validate content JSON schema response', () => {",
+							"        expect(tv4.validate(newProjectResponse,newProjectSchema)).to.be.true;",
+							"    })",
+							"    ",
+							"    it(\"Validate Response Time below 1000\", () =>{",
+							"        expect(responseTime).to.be.below(1000);",
+							"    })",
+							"    ",
+							"    it(\"Validate 200 response\", () =>{",
+							"        expect(response.status).to.equals(200);",
+							"    })",
+							"    ",
+							"    it(\"Validate Project Name\", () =>{",
+							"        //pm.expect(pm.globals.get(\"projectName\")).to.equals(\"Proyecto-0017\");",
+							"        expect(pm.globals.get(\"projectName\")).to.equals(project_name);",
+							"        //expect(pm.globals.get(\"projectName\")).to.equals(\"Proyecto-0017\");",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Peliculas!!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update A Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "979725de-733f-4696-bbce-f12f9b779012",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe(\"Validate Project Update\",() =>{",
+							"",
+							"    it(\"Validate Response Time below 1000\", () =>{",
+							"        expect(responseTime).to.be.below(1000);",
+							"    })",
+							"    ",
+							"    it(\"Validate 204 response\", () =>{",
+							"        expect(response.status).to.equals(204);",
+							"    })",
+							"",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"New-Proyecto-0001\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete A Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea0c5db7-77b1-49e3-a479-d10e3de846b2",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Deleted by 204 response\",() =>{",
+							"    ",
+							"    it(\"Validate 204 response\", () =>{",
+							"        //pm.expect(pm.globals.get(\"projectName\")).to.equals(\"Proyecto-0017\");",
+							"        expect(response.status).to.equals(204);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Deleted Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b394cd49-04f9-4dc1-bf51-ff87b6730daa",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Deleted Not Found by 404 response\",() =>{",
+							"    ",
+							"    it(\"Validate 404 response\", () =>{",
+							"        //pm.expect(pm.globals.get(\"projectName\")).to.equals(\"Proyecto-0017\");",
+							"        expect(response.status).to.equals(404);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Peliculas!!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create A New Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "57040bce-2343-4ea2-b1d8-7e8ae19eca5a",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"newTaskResponse = JSON.parse(responseBody);",
+							"pm.environment.set(\"taskId\", response.body.id);",
+							"newTaskSchema = {",
+							"    \"required\": [\"id\",\"project_id\",\"content\",\"completed\",\"label_ids\",\"order\",\"indent\",\"priority\",\"comment_count\",\"due\"],",
+							"    \"properties\": {",
+							"            \"id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"project_id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"content\": {",
+							"                \"type\": \"string\",",
+							"            },",
+							"            \"completed\": {",
+							"                \"type\": \"boolean\",",
+							"            },",
+							"            \"label_ids\": {",
+							"                \"type\": \"array\",",
+							"            },",
+							"            \"order\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"indent\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"priority\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"comment_count\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"due\": {",
+							"                \"type\": \"object\",",
+							"                \"properties\":{",
+							"                    \"recurring\": {\"type\": \"boolean\"},",
+							"                    \"string\": {\"type\": \"string\"},",
+							"                    \"date\": {\"type\": \"string\"},",
+							"                    \"datetime\": {\"type\": \"string\"},",
+							"                    \"timezone\": {\"type\": \"string\"}",
+							"                }",
+							"            }",
+							"        }",
+							"}",
+							"",
+							"describe(\"Validate Project Data\",() =>{",
+							"    ",
+							"    it(\"Validate 200 response\", () =>{",
+							"        expect(response.status).to.equals(200);",
+							"    })",
+							"    it('Validate JSON schema response', () => {",
+							"        response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Validate Response Time below 1000\", () =>{",
+							"        expect(responseTime).to.be.below(1000);",
+							"    })",
+							"    ",
+							"    it('Validate content JSON schema response', () => {",
+							"        expect(tv4.validate(newTaskResponse,newTaskSchema)).to.be.true;",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"Appointment with Rex\",\n\t\"due_string\": \"tomorrow at 12:00\", \n\t\"due_lang\": \"en\", \n\t\"priority\": 4\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Active Tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a016f569-4560-43a6-9dd1-16ee96553ab4",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"taskResponse = JSON.parse(responseBody);",
+							"responseTaskId = response.body[0].id;",
+							"taskSchema = {",
+							"    \"required\": [\"id\",\"project_id\",\"content\",\"completed\",\"label_ids\",\"order\",\"indent\",\"priority\",\"comment_count\",\"due\"],",
+							"    \"properties\": {",
+							"            \"id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"project_id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"content\": {",
+							"                \"type\": \"string\",",
+							"            },",
+							"            \"completed\": {",
+							"                \"type\": \"boolean\",",
+							"            },",
+							"            \"label_ids\": {",
+							"                \"type\": \"array\",",
+							"            },",
+							"            \"order\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"indent\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"priority\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"comment_count\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"due\": {",
+							"                \"type\": \"object\",",
+							"                \"properties\":{",
+							"                    \"recurring\": {\"type\": \"boolean\"},",
+							"                    \"string\": {\"type\": \"string\"},",
+							"                    \"date\": {\"type\": \"string\"},",
+							"                    \"datetime\": {\"type\": \"string\"},",
+							"                    \"timezone\": {\"type\": \"string\"}",
+							"                }",
+							"            }",
+							"        }",
+							"}",
+							"",
+							"describe(\"Validate Project Data\",() =>{",
+							"    ",
+							"    it(\"Validate 200 response\", () =>{",
+							"        expect(response.status).to.equals(200);",
+							"    })",
+							"    it('Validate JSON schema response', () => {",
+							"        response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Validate Response Time below 1000\", () =>{",
+							"        expect(responseTime).to.be.below(1000);",
+							"    })",
+							"    ",
+							"    it('Validate content JSON schema response', () => {",
+							"        expect(tv4.validate(taskResponse,taskSchema)).to.be.true;",
+							"    })",
+							"    response.body.id",
+							"    it('Validate content previously created task is active', () => {",
+							"        expect(pm.environment.get(\"taskId\")).to.equals(responseTaskId);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "48b6245f-8d43-4a2e-be7c-3331f190e968",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"taskResponse = JSON.parse(responseBody);",
+							"responseTaskId = response.body.id;",
+							"taskSchema = {",
+							"    \"required\": [\"id\",\"project_id\",\"content\",\"completed\",\"label_ids\",\"order\",\"indent\",\"priority\",\"comment_count\",\"due\"],",
+							"    \"properties\": {",
+							"            \"id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"project_id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"content\": {",
+							"                \"type\": \"string\",",
+							"            },",
+							"            \"completed\": {",
+							"                \"type\": \"boolean\",",
+							"            },",
+							"            \"label_ids\": {",
+							"                \"type\": \"array\",",
+							"            },",
+							"            \"order\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"indent\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"priority\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"comment_count\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"due\": {",
+							"                \"type\": \"object\",",
+							"                \"properties\":{",
+							"                    \"recurring\": {\"type\": \"boolean\"},",
+							"                    \"string\": {\"type\": \"string\"},",
+							"                    \"date\": {\"type\": \"string\"},",
+							"                    \"datetime\": {\"type\": \"string\"},",
+							"                    \"timezone\": {\"type\": \"string\"}",
+							"                }",
+							"            }",
+							"        }",
+							"}",
+							"",
+							"describe(\"Validate Project Data\",() =>{",
+							"    ",
+							"    it(\"Validate 200 response\", () =>{",
+							"        expect(response.status).to.equals(200);",
+							"    })",
+							"    it('Validate JSON schema response', () => {",
+							"        response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Validate Response Time below 1000\", () =>{",
+							"        expect(responseTime).to.be.below(1000);",
+							"    })",
+							"    ",
+							"    it('Validate content JSON schema response', () => {",
+							"        expect(tv4.validate(taskResponse,taskSchema)).to.be.true;",
+							"    })",
+							"    response.body.id",
+							"    it('Validate content previously created task is active', () => {",
+							"        expect(pm.environment.get(\"taskId\")).to.equals(responseTaskId);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Peliculas!!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5fc96649-aab0-42b0-bbe7-a4f31e6e87b7",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task updated\",() =>{",
+							"    ",
+							"    it(\"Validate 204 response\", () =>{",
+							"        expect(response.status).to.equals(204);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"Appointment with Rexino Pepino\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Close A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69d4111f-e849-4d3d-9af1-af834b26e414",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task closed\",() =>{",
+							"    ",
+							"    it(\"Validate 204 response\", () =>{",
+							"        expect(response.status).to.equals(204);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}/close",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"close"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Closed Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "54935b1d-67aa-4d7e-b924-fe71dfdf26c9",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task closed\",() =>{",
+							"    ",
+							"    it(\"Validate 404 response\", () =>{",
+							"        expect(response.status).to.equals(404);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Peliculas!!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reopen A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "038f20c5-408b-471a-a4a9-ab5260b116d7",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task reopened\",() =>{",
+							"    ",
+							"    it(\"Validate 204 response\", () =>{",
+							"        expect(response.status).to.equals(204);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}/reopen",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"reopen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reopened Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "48b6245f-8d43-4a2e-be7c-3331f190e968",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"taskResponse = JSON.parse(responseBody);",
+							"responseTaskId = response.body.id;",
+							"taskSchema = {",
+							"    \"required\": [\"id\",\"project_id\",\"content\",\"completed\",\"label_ids\",\"order\",\"indent\",\"priority\",\"comment_count\",\"due\"],",
+							"    \"properties\": {",
+							"            \"id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"project_id\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"content\": {",
+							"                \"type\": \"string\",",
+							"            },",
+							"            \"completed\": {",
+							"                \"type\": \"boolean\",",
+							"            },",
+							"            \"label_ids\": {",
+							"                \"type\": \"array\",",
+							"            },",
+							"            \"order\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"indent\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"priority\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"comment_count\": {",
+							"                \"type\": \"integer\",",
+							"            },",
+							"            \"due\": {",
+							"                \"type\": \"object\",",
+							"                \"properties\":{",
+							"                    \"recurring\": {\"type\": \"boolean\"},",
+							"                    \"string\": {\"type\": \"string\"},",
+							"                    \"date\": {\"type\": \"string\"},",
+							"                    \"datetime\": {\"type\": \"string\"},",
+							"                    \"timezone\": {\"type\": \"string\"}",
+							"                }",
+							"            }",
+							"        }",
+							"}",
+							"",
+							"describe(\"Validate Project Data\",() =>{",
+							"    ",
+							"    it(\"Validate 200 response\", () =>{",
+							"        expect(response.status).to.equals(200);",
+							"    })",
+							"    it('Validate JSON schema response', () => {",
+							"        response.should.be.json;",
+							"    })",
+							"    ",
+							"    it(\"Validate Response Time below 1000\", () =>{",
+							"        expect(responseTime).to.be.below(1000);",
+							"    })",
+							"    ",
+							"    it('Validate content JSON schema response', () => {",
+							"        expect(tv4.validate(taskResponse,taskSchema)).to.be.true;",
+							"    })",
+							"    response.body.id",
+							"    it('Validate content previously created task is active', () => {",
+							"        expect(pm.environment.get(\"taskId\")).to.equals(responseTaskId);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Peliculas!!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete A Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac2acca4-3d33-406b-80d2-c7d12e1048f7",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task deleted\",() =>{",
+							"    ",
+							"    it(\"Validate 204 response\", () =>{",
+							"        expect(response.status).to.equals(204);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Deleted Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "54935b1d-67aa-4d7e-b924-fe71dfdf26c9",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task closed\",() =>{",
+							"    ",
+							"    it(\"Validate 404 response\", () =>{",
+							"        expect(response.status).to.equals(404);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Peliculas!!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try To Reopen Deleted Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6514fa17-b640-46f7-bf1d-eb9cdaca7989",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task reopened\",() =>{",
+							"    ",
+							"    it(\"Validate 400 response\", () =>{",
+							"        expect(response.status).to.equals(400);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}/reopen",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"reopen"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
