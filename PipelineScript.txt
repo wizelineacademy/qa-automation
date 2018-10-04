@@ -1,0 +1,65 @@
+node {
+    
+    /*************************************************************************
+                            JMeter Todoist Tests Run
+    *************************************************************************/
+    
+    stage('JMeter Todoist tests run'){
+        powershell 'C:\\Users\\WCTest101\\Desktop\\Jenkins-Protractor\\jmeter\\apache-jmeter-5.0\\bin\\jmeter -n -t api_tests.jmx -l test_results.jtl'
+    }
+    
+    stage('JMeter generate dashboard report'){
+        powershell 'C:\\Users\\WCTest101\\Desktop\\Jenkins-Protractor\\jmeter\\apache-jmeter-5.0\\bin\\jmeter -g test_results.jtl -o dashboard'
+    }
+  
+    stage('Publish JMeter HTML report'){
+        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'dashboard', reportFiles: 'index.html', reportName: 'JMeter Test Report', reportTitles: ''])
+    }
+    
+    /*************************************************************************
+                            Postman/Newman Tests Run
+    *************************************************************************/
+    
+    stage('Postman/Newman Tests Run'){
+        powershell 'newman run postman/Todoist-Edna.postman_collection.json -e postman/Todoist_Edna.postman_environment.json --reporters cli,junit,html --reporter-junit-export reports/report.xml --reporter-html-export reports/htmlreport.html --disable-unicode'
+    }
+    
+    stage ('Publish Postman/Newman Reports'){
+        publishHTML (target: [
+          allowMissing: true,
+          alwaysLinkToLastBuild: true,
+          keepAll: true,
+          reportDir: 'reports/',
+          reportFiles: 'htmlreport.html',
+          reportName: "Postman/Newman Test Report"
+        ])
+        junit 'reports/report.xml' 
+    }
+    
+    /*************************************************************************
+                            Protractor Tests Run
+    *************************************************************************/
+    
+    stage('Protractor Tests Run'){
+        dir ('protractor_tests') {
+            powershell 'protractor confs/conf.js'
+        }
+    }
+    
+    stage('Publish Protractor Test Reports'){
+        
+        // HTML Report
+        publishHTML([
+            allowMissing: true,
+            alwaysLinkToLastBuild: true,
+            keepAll: true,
+            reportDir: 'protractor_tests/testreport/htmlreport',
+            reportFiles: 'chrome-test-report.html',
+            reportName: 'Protractor Test Report',
+            reportTitles: ''])
+        
+        //JUnit Report
+        junit 'protractor_tests/testreport/results.xml'
+    }
+    
+}
