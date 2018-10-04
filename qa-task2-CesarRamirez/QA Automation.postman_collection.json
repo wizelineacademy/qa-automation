@@ -1,0 +1,698 @@
+{
+	"info": {
+		"_postman_id": "6c09b7a8-1f5b-4a19-9c6f-dc9f3c30a5ab",
+		"name": "QA Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All projects",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4465178b-9c8e-4b4a-80b6-296e3a20aec1",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"pm.environment.set(\"projectId\", response.body.id);",
+							"pm.environment.set(\"name\", response.body.name);",
+							"",
+							"describe (\"Creating a new project\", () => {",
+							"    it(\"Project was created correctly\", () => {",
+							"        expect(pm.environment.get(\"name\")).to.equals(\"Create project for deletion\");",
+							"    });",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Create project for deletion\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c527c467-30b0-44ca-b4f4-531b5b6c82b9",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"pm.environment.set(\"projectId\", response.body.id);",
+							"pm.globals.set(\"projectName\", response.body.name);",
+							"",
+							"console.log(pm.environment.get(\"projectName\"));"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17d72cb1-6eef-46c7-a83d-65f44f1ad69e",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"",
+							"describe (\"Validate Project can be updated\", () => {",
+							"    it(\"Should have http 204 No content\", ()=>{",
+							"        response.should.have.status(204);",
+							"    })",
+							"})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Pending\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ceaa7f90-bb38-4082-b440-479e252f1bc6",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Request Data\", () => {",
+							"    it(\"Should response a http 204 OK\", () => {",
+							"        response.should.have.status(204);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Active Tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "85ded6c5-133d-4ff0-88a7-b569a23ba1f3",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe(\"Validate request data about tasks\", () => {",
+							"    it(\"Should return a JSON response\", () =>{",
+							"        response.should.be.json;",
+							"    })",
+							"    it(\"Should response a Http 200 OK\", () =>{",
+							"        response.should.have.status(200);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22ac85cd-1b2b-432d-b55b-e349230d24c7",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"pm.environment.set(\"taskId\", response.body.id)",
+							"pm.environment.set(\"taskName\", response.body.content)",
+							"",
+							"let task= 'Date with my Girlfriend'",
+							"",
+							"describe(\"Validate post and request data by updating a task\", ()=>{",
+							"    it(\"Should return a JSON response\", () =>{",
+							"        response.should.be.json;",
+							"    })",
+							"    it(\"Should response a Http 200 OK\", () =>{",
+							"        response.should.have.status(200);",
+							"    })",
+							"    it(\"It should have the correct task name\", () =>{",
+							"        expect(pm.environment.get(\"taskName\")).to.equals(task);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"project_id\": {{projectId}},\n\t\"content\": \"Date with my Girlfriend\",\n\t\"due_string\": \"tomorrow at 18:00\",\n\t\"due_lang\": \"en\",\n\t\"priority\": 3\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "27e2b2bd-ae5f-41bd-b412-17b1e9b43438",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"pm.environment.set(\"taskId\", response.body.id);",
+							"pm.environment.set(\"taskName\", response.body.content);",
+							"",
+							"let task= \"Date with my Girlfriend\";",
+							"",
+							"describe(\"Validate post and request data by updating a task\", ()=>{",
+							"    it(\"Should return a JSON response\", () =>{",
+							"        response.should.be.json;",
+							"    })",
+							"    it(\"Should response a Http 200 OK\", () =>{",
+							"        response.should.have.status(200);",
+							"    })",
+							"    it(\"It should have the correct task name\", () =>{",
+							"        expect(pm.environment.get(\"taskName\")).to.equals(task);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aeaa05b1-7932-4fad-90c7-dc6bbfa69b60",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe(\"Validate post and request data by updating a task\", ()=>{",
+							"    it(\"Should response a Http 204 with no Content\", () =>{",
+							"        response.should.have.status(204);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"Update the content of the task :D!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Close a Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "222c8fb9-4a90-4cf8-8133-a554a362915e",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe(\"Validate a task can be closed\", ()=>{",
+							"    it(\"Should response a Http 204 with no Content\", () =>{",
+							"        response.should.have.status(204);",
+							"    })",
+							"})"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a8d8e848-94de-4964-8cfd-54eda864aa4d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"completed\": true\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}/close",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"close"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reopen a Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d6d68b6-73d4-4bff-8a05-71c54f5aea91",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe(\"Validate a task can be closed\", ()=>{",
+							"    it(\"Should response a Http 204 with no Content\", () =>{",
+							"        response.should.have.status(204);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"completed\": false\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}/reopen",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"reopen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33167346-7821-4417-a9ab-e993a8e08569",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"",
+							"describe(\"Validate a task can be closed\", ()=>{",
+							"    it(\"Should response a Http 204 with no Content\", () =>{",
+							"        response.should.have.status(204);",
+							"    })",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"disable\": true\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	}
+}
