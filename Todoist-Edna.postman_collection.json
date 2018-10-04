@@ -1,0 +1,922 @@
+{
+	"info": {
+		"_postman_id": "faf50816-b2c6-4adb-859f-f006db9b9b3f",
+		"name": "Todoist-Edna",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAllProjects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "96622d89-db34-417d-a9e0-8d192e704ffa",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has jsonBody\", function () {",
+							"   pm.response.to.have.jsonBody();",
+							"});",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b8be0057-052a-4b74-9b2b-b9e177e0a67a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify Project Name is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get('projectName'));",
+							"});",
+							"",
+							"pm.test(\"Set project Id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"projectId\", jsonData.id);",
+							"});",
+							"",
+							"var schema = {",
+							"    ",
+							"    \"type\": \"object\",",
+							"            \"required\": [",
+							"                \"id\",",
+							"                \"name\",",
+							"                \"order\",",
+							"                \"indent\",",
+							"                \"comment_count\"",
+							"            ],",
+							"            \"properties\": {",
+							"                \"id\": {",
+							"                    \"type\": \"integer\"",
+							"                },",
+							"                \"name\": {",
+							"                    \"type\": \"string\",",
+							"                    \"pattern\": \"^(.*)$\"",
+							"                },",
+							"                \"order\": {",
+							"                    \"type\": \"integer\"",
+							"                },",
+							"                \"indent\": {",
+							"                    \"type\": \"integer\"",
+							"                },",
+							"                \"comment_count\": {",
+							"                    \"type\": \"integer\"",
+							"                }",
+							"            }",
+							"    };    ",
+							"           ",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"  ",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c09ffe2f-5f51-4d9a-82fd-2749e0c2200a",
+						"type": "text/javascript",
+						"exec": [
+							"const projectName = 'My New Project ' + parseInt(Math.random() * 100);",
+							"pm.environment.set('projectName', projectName);",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{projectName}}\"\n\t\n\t}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ab407589-62b6-4277-a2e6-fdbafa4d80e2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify Project Name is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get('projectName'));",
+							"});",
+							"",
+							"",
+							"var schema = {",
+							"    ",
+							"    \"type\": \"object\",",
+							"            \"required\": [",
+							"                \"id\",",
+							"                \"name\",",
+							"                \"order\",",
+							"                \"indent\",",
+							"                \"comment_count\"",
+							"            ],",
+							"            \"properties\": {",
+							"                \"id\": {",
+							"                    \"type\": \"integer\"",
+							"                },",
+							"                \"name\": {",
+							"                    \"type\": \"string\",",
+							"                    \"pattern\": \"^(.*)$\"",
+							"                },",
+							"                \"order\": {",
+							"                    \"type\": \"integer\"",
+							"                },",
+							"                \"indent\": {",
+							"                    \"type\": \"integer\"",
+							"                },",
+							"                \"comment_count\": {",
+							"                    \"type\": \"integer\"",
+							"                }",
+							"            }",
+							"    };    ",
+							"           ",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"  ",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "84e5785c-2ff9-427e-89c9-3cf692ff6e2e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"pm.test(\"Response has empty body\", function () {",
+							"    pm.response.to.have.body(\"\");",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{projectName}} - Updated\"\n\t\n\t}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ff7780e6-8eb7-41f8-a820-f6fe5ca73b73",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"pm.test(\"Response has empty body\", function () {",
+							"    pm.response.to.have.body(\"\");",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetActiveTasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d381573-7202-4687-b6fc-5e02eeb9a8d8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has jsonBody\", function () {",
+							"   pm.response.to.have.jsonBody();",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57077c85-812d-4761-9393-18a1a2e344fd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10cd231c-6ee8-43b3-b641-5a4738a01f6c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify Task Name is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.content).to.eql(pm.environment.get('taskName'));",
+							"   ",
+							"});",
+							"",
+							"pm.test(\"Set Task Id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"taskId\", jsonData.id);",
+							"   ",
+							"});",
+							"",
+							"var schema = {",
+							"    ",
+							"  \"type\": \"object\",",
+							"  \"required\": [",
+							"    \"id\",",
+							"    \"project_id\",",
+							"    \"content\",",
+							"    \"completed\",",
+							"    \"label_ids\",",
+							"    \"order\",",
+							"    \"indent\",",
+							"    \"priority\",",
+							"    \"comment_count\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"id\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"project_id\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"content\": {",
+							"      \"type\": \"string\",",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"completed\": {",
+							"      \"type\": \"boolean\",",
+							"    },",
+							"    \"label_ids\": {",
+							"      \"type\": \"array\",",
+							"    },",
+							"    \"order\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"indent\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"priority\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"comment_count\": {",
+							"      \"type\": \"integer\",",
+							"    }",
+							"  }",
+							"};",
+							"",
+							"var jsonData = pm.response.json();",
+							"  pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"  ",
+							" ",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b868e62f-cd4d-46df-9d05-ca8f90fb32db",
+						"type": "text/javascript",
+						"exec": [
+							"const taskName = 'My New Task ' + parseInt(Math.random() * 100);",
+							"pm.environment.set('taskName', taskName);",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"{{taskName}}\"\n\t\n\t}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "de5ccb2d-8171-4a5a-8fbf-1cc98f5e10fd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify Task Name is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.content).to.eql(pm.environment.get('taskName'));",
+							"   ",
+							"});",
+							"",
+							"var schema = {",
+							"    ",
+							"  \"type\": \"object\",",
+							"  \"required\": [",
+							"    \"id\",",
+							"    \"project_id\",",
+							"    \"content\",",
+							"    \"completed\",",
+							"    \"label_ids\",",
+							"    \"order\",",
+							"    \"indent\",",
+							"    \"priority\",",
+							"    \"comment_count\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"id\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"project_id\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"content\": {",
+							"      \"type\": \"string\",",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"completed\": {",
+							"      \"type\": \"boolean\",",
+							"    },",
+							"    \"label_ids\": {",
+							"      \"type\": \"array\",",
+							"    },",
+							"    \"order\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"indent\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"priority\": {",
+							"      \"type\": \"integer\",",
+							"    },",
+							"    \"comment_count\": {",
+							"      \"type\": \"integer\",",
+							"    }",
+							"  }",
+							"};",
+							"",
+							"var jsonData = pm.response.json();",
+							"  pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"  ",
+							" ",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "736366f2-bc31-45bf-bcc5-b21a44e25154",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "75d424e8-7e5f-48fd-8d1f-3de24c8ca8bc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"pm.test(\"Response has empty body\", function () {",
+							"    pm.response.to.have.body(\"\");",
+							"});",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "52bb61a7-74bb-499e-bb3d-1baf37e6b8d8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"{{taskName}} - Updated\"\n\t\n\t}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CloseTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "634a1207-2d79-4877-bc4d-56fe76cf2a12",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"pm.test(\"Response has empty body\", function () {",
+							"    pm.response.to.have.body(\"\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}/close",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"close"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReOpenTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "25c11603-32b7-46db-9b99-420848549224",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"pm.test(\"Response has empty body\", function () {",
+							"    pm.response.to.have.body(\"\");",
+							"});",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}/reopen",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"reopen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ff9afda6-837b-4d94-956e-37b6bd3a5eef",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"pm.test(\"Response has empty body\", function () {",
+							"    pm.response.to.have.body(\"\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "c4e9904275927115055856212fc55dccb5855eba",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "86c590e6-0543-4d7e-91e1-45e05fbff529",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "69691b08-2296-4257-b4f8-ea663924fe88",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "04c31ab0-38dd-4d6e-93bb-d9172a739c2a",
+			"key": "ProjectName",
+			"value": "response.body.name",
+			"type": "string"
+		}
+	]
+}
