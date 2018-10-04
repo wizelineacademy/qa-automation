@@ -1,0 +1,731 @@
+{
+	"info": {
+		"_postman_id": "2efa693c-4058-4275-86f1-ee10f23ed0ad",
+		"name": "Task2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAllProjects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "435921db-c07b-4292-9409-7ab92667aa9a",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"var size = response.body.length;",
+							"pm.environment.set(\"projectId\", response.body[size-1].id);",
+							"postman.setGlobalVariable(\"basicValidations\", (tInput) => {",
+							"    describe (\"statusAndTime\", () => {",
+							"        it (\"Correct status\", () => {",
+							"            pm.response.to.have.status(200);",
+							"        }),",
+							"        it (\"Adequate time\", () => {",
+							"            pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"        });",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProjectbyId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cd756168-13b8-4831-9398-4f8ccc2532a5",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"eval(globals.basicValidations);",
+							"",
+							"describe (\"Checking specific project query\", () => {",
+							"    it (\"ID not null\", () => {",
+							"        pm.expect(response.body.id).to.not.be.null;",
+							"    });",
+							"    it (\"Name not empty\", () => {",
+							"        pm.expect(response.body.name).to.not.be.empty;",
+							"    });",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "685f520a-7f7b-4c81-befc-7283992d3b07",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"eval(globals.basicValidations);",
+							"pm.environment.set(\"projectId\", response.body.id);",
+							"pm.environment.set(\"projectName\", response.body.name);",
+							"describe (\"Validating responses\", () => {",
+							"    it (\"ID not null\", () => {",
+							"        pm.expect(response.body.id).to.not.be.null;",
+							"    });",
+							"    it (\"Name not empty\", () => {",
+							"        pm.expect(response.body.name).to.not.be.empty;",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\" : \"TareaExtra3\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fce07407-7fef-4c32-a8b5-eac03ee4de76",
+						"type": "text/javascript",
+						"exec": [
+							"eval (globals.postmanBDD);",
+							"postman.setGlobalVariable(\"UpdateProjectTests\", (tInput) => {",
+							"    describe (\"Validations on project task updated\", () => {",
+							"        it (\"Correct Status\", () => {",
+							"            pm.response.to.have.status(204);",
+							"        });",
+							"        it (\"Adequate time\", () => {",
+							"            pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"        });",
+							"    });",
+							"});",
+							"eval(globals.UpdateProjectTests);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\" : \"task updated\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postmanBDD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "988af7a8-cc61-495d-96d7-522e3bf7d569",
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable('postmanBDD', responseBody);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js",
+					"protocol": "http",
+					"host": [
+						"bigstickcarpet",
+						"com"
+					],
+					"path": [
+						"postman-bdd",
+						"dist",
+						"postman-bdd.min.js"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c0020bbe-002b-407d-b06e-40acf64ae329",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"postman.setGlobalVariable(\"DeleteProjectTests\", (tInput) => {",
+							"    describe (\"Validations on project task deleted \", () => {",
+							"        it (\"Correct Status\", () => {",
+							"            pm.response.to.have.status(204);",
+							"        });",
+							"        it (\"Adequate time\", () => {",
+							"            pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"        });",
+							"    });",
+							"});",
+							"eval(globals.DeleteProjectTests);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6c76f9fa482a86468168ade3ba8c5b6e9190651b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getActiveTasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fa71e599-f685-4df3-9257-f012db22624f",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"eval(globals.basicValidations);",
+							"var size = response.body.length;",
+							"pm.environment.set(\"taskId\", response.body[size-1].id);",
+							"describe (\"Tasks responses\", () => {",
+							"    it (\"Response not empty\", () => {",
+							"        pm.expect(size !== 0).to.be.true;",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6c76f9fa482a86468168ade3ba8c5b6e9190651b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createNewTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cc479d10-5485-40e2-a448-76788862b0d0",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"eval(globals.basicValidations);",
+							"describe (\"Validation of creation of new task\", () => {",
+							"    it (\"Id of the new task\", () => {",
+							"    pm.expect(response.body.id).to.not.be.null;",
+							"    });",
+							"    it (\"Content body of the new task\", () => {",
+							"    pm.expect(response.body.content).to.not.be.empty;",
+							"    });",
+							"    it (\"New task can't be complete\", () => {",
+							"    pm.expect(response.body.completed).to.be.false;",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6c76f9fa482a86468168ade3ba8c5b6e9190651b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"QA 1300 meeting\", \n\t\"due_lang\": \"en\", \n\t\"priority\": 4\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTaskById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b69f3ea-f847-4204-897f-598af1fcba6e",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"pm.environment.set(response.body.id);",
+							"eval(globals.basicValidations);",
+							"describe (\"Validating getting a task by its id\", () => {",
+							"    it (\"The task has a project id\", () => {",
+							"    pm.expect(response.body.project_id).to.not.be.null;",
+							"    });",
+							"    it (\"The task has content\", () => {",
+							"    pm.expect(response.body.content).to.not.be.empty;",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6c76f9fa482a86468168ade3ba8c5b6e9190651b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91f5dada-c4fe-4829-a7e3-726a5912c9fc",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Validating update a task\", () => {",
+							"    it (\"Correct status\", () => {",
+							"        pm.response.to.have.status(204);",
+							"    });",
+							"    it (\"Adequate time\", () => {",
+							"        pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"    });",
+							"    it (\"Body should be empty\", () => {",
+							"        pm.expect(response.body).to.be.empty;",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6c76f9fa482a86468168ade3ba8c5b6e9190651b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"I'm updating a task\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "closeTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a0dda02-c94c-4a67-b3dc-3b9b654a3aa5",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Validating closing a task\", () => {",
+							"    it (\"Correct status\", () => {",
+							"        pm.response.to.have.status(204);",
+							"    });",
+							"    it (\"Adequate time\", () => {",
+							"        pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6c76f9fa482a86468168ade3ba8c5b6e9190651b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}/close",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"close"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reopenTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a0dda02-c94c-4a67-b3dc-3b9b654a3aa5",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Validating closing a task\", () => {",
+							"    it (\"Correct status\", () => {",
+							"        pm.response.to.have.status(204);",
+							"    });",
+							"    it (\"Adequate time\", () => {",
+							"        pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6c76f9fa482a86468168ade3ba8c5b6e9190651b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}/reopen",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"reopen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a0dda02-c94c-4a67-b3dc-3b9b654a3aa5",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"describe (\"Validating closing a task\", () => {",
+							"    it (\"Correct status\", () => {",
+							"        pm.response.to.have.status(204);",
+							"    });",
+							"    it (\"Adequate time\", () => {",
+							"        pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6c76f9fa482a86468168ade3ba8c5b6e9190651b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
