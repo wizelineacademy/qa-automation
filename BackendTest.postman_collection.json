@@ -1,0 +1,742 @@
+{
+	"info": {
+		"_postman_id": "f1841796-d550-46a2-a653-e9304a95f4c9",
+		"name": "BackendTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ClosedTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d32345cc-b05e-4d07-947d-66a7012c0f12",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task Data\", () =>{",
+							"  it(\"should have the correct state name\",()=>{",
+							"//     expect(pm.environment.set(\"projectName1\", \"study english\"));",
+							"  });",
+							"",
+							"  pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"})",
+							"",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "taskID",
+						"value": "2843082398"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"content\": \"go to cinema\"\n    }"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskID}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskID}}"
+					]
+				},
+				"description": "Validate by IdProject"
+			},
+			"response": []
+		},
+		{
+			"name": "GetByName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7ff6f3b4-37c0-46c3-a363-bb98e0f3e813",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"//pm.environment.set(\"projectId\",response.body.id);",
+							"//pm.environment.set(\"projectName\",response.body.name);",
+							"",
+							"",
+							"//pm.globals.get(\"projectName\");",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"    it(\"should have the correct state name\",()=>{",
+							"        //pm.expect(pm.environment.projectName).to.equals(\"Tijuana\")",
+							"        expect(pm.environment.get(\"projectName\")).to.equals(\"Tijuana\");",
+							"    });",
+							"    it(\"should be a 200 response\",()=> {",
+							"        //expect(response.status).to.equals(200)",
+							"    });",
+							"    ",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Tijuana\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectName}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectName}}"
+					]
+				},
+				"description": "Validated by ProjectName"
+			},
+			"response": []
+		},
+		{
+			"name": "GetByAllTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2c3bae34-3ca5-44a6-b41d-e5f5fb06ef7c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks"
+					]
+				},
+				"description": "Get by all projects"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewProject",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Dinner\"\n}\n"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByIdProject",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/2195990627",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"2195990627"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d02d6694-f20b-4637-a06b-1df92f104466",
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable('postmanBDD', responseBody);",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js",
+					"protocol": "http",
+					"host": [
+						"bigstickcarpet",
+						"com"
+					],
+					"path": [
+						"postman-bdd",
+						"dist",
+						"postman-bdd.min.js"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5e603e3-3bf8-4ea7-838c-824020714988",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 5d00391d6d7c973a97e039d4d512b63c30e4dae1"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"id\": 2195997427,\n        \"name\": \"Mexico\",\n        \"order\": 8,\n        \"indent\": 1,\n        \"comment_count\": 0\n    }"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectID}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "edaf162f-2503-4af8-b341-d2ca3fa46ef8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"Appointment with Orlando\", \n\t\"due_string\": \"tomorrow at 12:00\", \n\t\"due_lang\": \"en\", \n\t\"priority\": 4\n\t\t\n\t\n}\n"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByAllProjects",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects"
+					]
+				},
+				"description": "Get by all projects"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ced88f64-4d88-472e-9c70-2ed6109c30b8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"id\": 2843082521,\n        \"project_id\": 2195425770,\n        \"content\": \"Appointment with Maria\",\n        \"completed\": false,\n        \"label_ids\": [],\n        \"order\": 5,\n        \"indent\": 1,\n        \"priority\": 4,\n        \"comment_count\": 0,\n        \"due\": {\n            \"recurring\": false,\n            \"string\": \"tomorrow at 12:00\",\n            \"date\": \"2018-10-04\",\n            \"datetime\": \"2018-10-04T12:00:00Z\",\n            \"timezone\": \"America/Mexico_City\"\n        },\n        \"url\": \"https://todoist.com/showTask?id=2843082521\"\n    }\n    \n"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/2843082521",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"2843082521"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClosedTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5488eb3b-6b29-45ad-b5b5-94df755efe47",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "taskID",
+						"value": "2843082398"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"content\": \"go to cinema\"\n    }"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskID}}/close",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskID}}",
+						"close"
+					]
+				},
+				"description": "Closes a task"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d32345cc-b05e-4d07-947d-66a7012c0f12",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task Data\", () =>{",
+							"  it(\"should have the correct state name\",()=>{",
+							"//     expect(pm.environment.set(\"projectName1\", \"study english\"));",
+							"  });",
+							"",
+							"  pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"})",
+							"",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "taskID",
+						"value": "2843082398"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"content\": \"go to cinema\"\n    }"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskID}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskID}}"
+					]
+				},
+				"description": "Update a task"
+			},
+			"response": []
+		},
+		{
+			"name": "ReOpenTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "61358796-0506-47ab-a291-05db4b8b1ae3",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(204);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "taskID",
+						"value": "2843082398"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"content\": \"go to cinema\"\n    }"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/tasks/{{taskID}}/reopen",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"tasks",
+						"{{taskID}}",
+						"reopen"
+					]
+				},
+				"description": "Reopen a task"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5fbb50b1-bab7-4601-99d1-f894b57f2b4c",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Task Data\", () =>{",
+							"  it(\"should have the correct state name\",()=>{",
+							"  expect(pm.environment.set(\"projectName1\", \"study english\"));",
+							"  });",
+							"",
+							"  pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"})",
+							"",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "taskID",
+						"value": "2843082398"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Read a book\"}"
+				},
+				"url": {
+					"raw": "{{baseURL}}API/v8/projects/{{projectID}}",
+					"host": [
+						"{{baseURL}}API"
+					],
+					"path": [
+						"v8",
+						"projects",
+						"{{projectID}}"
+					]
+				},
+				"description": "Update a project"
+			},
+			"response": []
+		}
+	]
+}
